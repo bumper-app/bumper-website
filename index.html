@@ -94,8 +94,6 @@ function paginate(start, end){
 	
 function report_select(index){
 	
-	console.log(1);
-	
 	 $.ajax({
 		url:"http://research.mathieu-nayrolles.com/bumper/solr/select?q=*%3A*&fq=id%3A"+index+"&fq=type%3A\"BUG\"&sort=type+asc&wt=json&indent=true",
 		dataType: 'jsonp',
@@ -154,77 +152,71 @@ function report_select(index){
 				bug_detail = bug_detail +"</div></div>";
 			
 				$("#bug_details").html(bug_detail);
+			
+			 $.ajax({
+				url:"http://research.mathieu-nayrolles.com/bumper/solr/select?q=*%3A*&fq=report_s%3A"+index+"&fq=type%3A(CHANGESET+OR+HUNKS)&sort=type+asc&wt=json&indent=true",
+				dataType: 'jsonp',
+				jsonp: 'json.wrf',
+				success: function(res){
 
+
+					var fix = "";
+
+					$.each(res.response.docs, function( index, value ) {
+
+						var fixItem = "";
+
+						if(value.type == "CHANGESET"){
+
+							fixItem = fixItem + "<div class='changeset'>";
+							fixItem = fixItem + "<div class='changeset_summary'><i>" + value.id + "</i> " + value.summary + "</div>";
+
+							fixItem = fixItem +"<ul class='changeset_file'>";
+
+							$.each(value.file, function (indexFile, ValueFile){
+
+								fixItem = fixItem + "<li>"+ValueFile+"</li>";
+
+							});
+
+
+							fixItem = fixItem + "</ul>";
+
+							fixItem = fixItem + "<div class='changeset_stats'> ("+value.number_files + ") files, ("+value.insertions+") insertions, ("+value.deletions+") deletions.</div>";
+
+							fix = fix + fixItem;
+
+						}else{
+
+							fixItem = fixItem + "<pre><code class='diff'>Index: " + value.id.split("@@")[2] + "\n";
+							fixItem = fixItem + "===================================================================\n";
+
+							fixItem = fixItem + value.insertion + "\n";
+
+							$.each(value.change, function (indexChange, valueChange){
+
+								fixItem = fixItem + valueChange + "\n";
+
+							});
+
+							fixItem = fixItem + "</code><pre>";
+							fix = fix + fixItem;
+
+							$('.fix').html(fix);
+
+							$(document).ready(function() {
+							$('pre code').each(function(i, block) {
+								hljs.highlightBlock(block);
+							  });
+							});
+
+						}
+
+					});
 		}
 		 
 	 });
 
-	
-	 $.ajax({
-  	url:"http://research.mathieu-nayrolles.com/bumper/solr/select?q=*%3A*&fq=report_s%3A"+index+"&fq=type%3A(CHANGESET+OR+HUNKS)&sort=type+asc&wt=json&indent=true",
-  	dataType: 'jsonp',
-  	jsonp: 'json.wrf',
-  	success: function(res){
-		
-		
-		var fix = "";
-		
-		$.each(res.response.docs, function( index, value ) {
-			
-			var fixItem = "";
-			
-			if(value.type == "CHANGESET"){
-				
-				fixItem = fixItem + "<div class='changeset'>";
-				fixItem = fixItem + "<div class='changeset_summary'><i>" + value.id + "</i> " + value.summary + "</div>";
-				
-				fixItem = fixItem +"<ul class='changeset_file'>";
-				
-				$.each(value.file, function (indexFile, ValueFile){
-					
-					fixItem = fixItem + "<li>"+ValueFile+"</li>";
-					
-				});
-			
-				
-				fixItem = fixItem + "</ul>";
-				
-				fixItem = fixItem + "<div class='changeset_stats'> ("+value.number_files + ") files, ("+value.insertions+") insertions, ("+value.deletions+") deletions.</div>";
-				
-				fix = fix + fixItem;
-				
-			}else{
-				
-				fixItem = fixItem + "<pre><code class='diff'>Index: " + value.id.split("@@")[2] + "\n";
-				fixItem = fixItem + "===================================================================\n";
-				
-				fixItem = fixItem + value.insertion + "\n";
-				
-				$.each(value.change, function (indexChange, valueChange){
-					
-					fixItem = fixItem + valueChange + "\n";
-					
-				});
-				
-				fixItem = fixItem + "</code><pre>";
-				fix = fix + fixItem;
-				
-				$('.fix').html(fix);
-				
-				$(document).ready(function() {
-				$('pre code').each(function(i, block) {
-					hljs.highlightBlock(block);
-				  });
-				});
-				
-			}
-			
-		});
-		
-		
-		
-		
-	
    }});
 	
 	
