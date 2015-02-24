@@ -73,7 +73,7 @@ var advanced = false;
 function toogleQueryingMode(){
 	
 	if(!advanced){
-		$("#field").val('(type:BUG AND report_t:"'+$("#field").val()+'" AND -churns:0) OR ({!parent which="type:BUG AND -churns 0"}type:CHANGESET AND fix_t:"'+$("#field").val()+'") OR ({!parent which="type:BUG AND -churns 0"}type:HUNKS AND fix_t:"'+$("#field").val()+'")&start='+startRow+'&rows='+endRow+'&wt=json');
+		$("#field").val('(type:"BUG" AND report_t:"'+$("#field").val()+'" AND -churns:0) OR ({!parent which="type:BUG"}{!parent which="type:CHANGESET"}type:"HUNKS" AND fix_t:"'+$("#field").val()+'") OR ({!parent which="type:BUG"}type:"CHANGESET" AND fix_t:"'+$("#field").val()+'")&start='+startRow+'&rows='+endRow+'&wt=json');
 		
 		$("#advanced_mode").text("Basic querying");
 		
@@ -93,60 +93,75 @@ function paginate(start, end){
 }
 	
 function report_select(index){
-	var report = response.docs[index];
 	
-	var bug_detail = "<div class='bug_details'>"
-	+"<div class='header_details'>"
-	+"<div class='project_image'><img src='img/netbeans.png'/></div>"
-	+"<div class='bug_id'>" + report.id + " (" + report.project + ")</div>"
-	+"<div class='bug_title'>" + report.title + "</div>"
-	
-	+"<h4>Details</h4><div class='section-details'>"
-	+"<ul class='classification'>"
-	
-	+"<li class='item'><span class='wrap-li'>Report type:</span> " + report.type + "</li><br />"
-	+"<li class='item'><span class='wrap-li'>Status:</span>  " + report.bug_status + "</li><br />"
-	+"<li class='item'><span class='wrap-li'>Severity:</span>  " + report.bug_severity + "</li><br />"
-	+"<li class='item'><span class='wrap-li'>Days to fix:</span>  " + report.fixing_time + "</li><br />"
-	+"<li class='item'><span class='wrap-li'>Churns:</span>  " + report.churns + "</li><br />"
-	+ "</ul><ul class='classification'>"
-	+"<li class='item'><span class='wrap-li'>Resolution:</span>  " + report.resolution + "</li><br />"
-	+"<li class='item'><span class='wrap-li'>Version:</span>  " + report.version + "</li><br />"
-	+"<li class='item'><span class='wrap-li'>Sub-Project:</span>  " + report.sub_project + "</li><br />"
-	+"<li class='item'><span class='wrap-li'>Comments:</span>  " + report.comments_nb + "</li><br />"
-	+"<li class='item'><span class='wrap-li'>Hunks:</span>  " + report.hunks + "</li><br />"
-	+ "</ul><ul class='classification'>"
-	+"<li class='item'><span class='wrap-li'>Reporter:</span>  " + report.reporter_pseudo + " (" + report.reporter_name + ")" + "</li><br />"
-	+"<li class='item'><span class='wrap-li'>Assignee:</span>  " + report.assigned_to_pseudo + " (" + report.assigned_to_name + ")" + "</li><br />"
-	+"<li class='item'><span class='wrap-li'>Files to fix:</span>  " + report.number_files + "</li><br />"
-	
-
-	+"</ul></div>"
-	+"</div>"
-	
-	+ "<h4>Description</h4><div class='section_description'>"
-	+"<div class='description'>" + report.description + "</div></div>"
-	
-	+ '<h4>Comments</h4><div class="section_comment">';
-	
-	$.each(report.comment, function( index, value ){
-		var parsedComment = value.split('*`|`*');
-		var comment = "<div class='bug_result_comment'>"
-		+ "<p class='bug_result_commenter'> " + parsedComment[0] + " ("+ parsedComment[1] + ") @ " + parsedComment[2] +"<p>"
-		+ "<p class='bug_result_comment'> " + parsedComment[3].replace("\\n", "<br />") + "<p>"
-		+ "</div>";
-
-		bug_detail = bug_detail + comment;
-	});
-	
-	bug_detail = bug_detail + "</div>";
-	
-	bug_detail = bug_detail + "<h4>Fix</h4><div class='section_fix'>";
-	bug_detail = bug_detail +"<div class='fix'>No Fix Known</div>";
-	bug_detail = bug_detail +"</div></div>";
+	console.log(1);
 	
 	 $.ajax({
-  	url:"http://research.mathieu-nayrolles.com/bumper/solr/select?q=*%3A*&fq=report_s%3A"+report.id+"&fq=type%3A(CHANGESET+OR+HUNKS)&sort=type+asc&wt=json&indent=true",
+		url:"http://research.mathieu-nayrolles.com/bumper/solr/select?q=*%3A*&fq=id%3A"+index+"&fq=type%3A\"BUG\"&sort=type+asc&wt=json&indent=true",
+		dataType: 'jsonp',
+		jsonp: 'json.wrf',
+		success: function(res){
+			
+				var report = res.response.docs[0];
+				var bug_detail = "<div class='bug_details'>"
+				+"<div class='header_details'>"
+				+"<div class='project_image'><img src='img/netbeans.png'/></div>"
+				+"<div class='bug_id'>" + report.id + " (" + report.project + ")</div>"
+				+"<div class='bug_title'>" + report.title + "</div>"
+
+				+"<h4>Details</h4><div class='section-details'>"
+				+"<ul class='classification'>"
+
+				+"<li class='item'><span class='wrap-li'>Report type:</span> " + report.type + "</li><br />"
+				+"<li class='item'><span class='wrap-li'>Status:</span>  " + report.bug_status + "</li><br />"
+				+"<li class='item'><span class='wrap-li'>Severity:</span>  " + report.bug_severity + "</li><br />"
+				+"<li class='item'><span class='wrap-li'>Days to fix:</span>  " + report.fixing_time + "</li><br />"
+				+"<li class='item'><span class='wrap-li'>Churns:</span>  " + report.churns + "</li><br />"
+				+ "</ul><ul class='classification'>"
+				+"<li class='item'><span class='wrap-li'>Resolution:</span>  " + report.resolution + "</li><br />"
+				+"<li class='item'><span class='wrap-li'>Version:</span>  " + report.version + "</li><br />"
+				+"<li class='item'><span class='wrap-li'>Sub-Project:</span>  " + report.sub_project + "</li><br />"
+				+"<li class='item'><span class='wrap-li'>Comments:</span>  " + report.comments_nb + "</li><br />"
+				+"<li class='item'><span class='wrap-li'>Hunks:</span>  " + report.hunks + "</li><br />"
+				+ "</ul><ul class='classification'>"
+				+"<li class='item'><span class='wrap-li'>Reporter:</span>  " + report.reporter_pseudo + " (" + report.reporter_name + ")" + "</li><br />"
+				+"<li class='item'><span class='wrap-li'>Assignee:</span>  " + report.assigned_to_pseudo + " (" + report.assigned_to_name + ")" + "</li><br />"
+				+"<li class='item'><span class='wrap-li'>Files to fix:</span>  " + report.number_files + "</li><br />"
+
+
+				+"</ul></div>"
+				+"</div>"
+
+				+ "<h4>Description</h4><div class='section_description'>"
+				+"<div class='description'>" + report.description + "</div></div>"
+
+				+ '<h4>Comments</h4><div class="section_comment">';
+			
+				$.each(report.comment, function( index, value ){
+					var parsedComment = value.split('*`|`*');
+					var comment = "<div class='bug_result_comment'>"
+					+ "<p class='bug_result_commenter'> " + parsedComment[0] + " ("+ parsedComment[1] + ") @ " + parsedComment[2] +"<p>"
+					+ "<p class='bug_result_comment'> " + parsedComment[3].replace("\\n", "<br />") + "<p>"
+					+ "</div>";
+
+					bug_detail = bug_detail + comment;
+				});
+
+				bug_detail = bug_detail + "</div>";
+
+				bug_detail = bug_detail + "<h4>Fix</h4><div class='section_fix'>";
+				bug_detail = bug_detail +"<div class='fix'>No Fix Known</div>";
+				bug_detail = bug_detail +"</div></div>";
+			
+				$("#bug_details").html(bug_detail);
+
+		}
+		 
+	 });
+
+	
+	 $.ajax({
+  	url:"http://research.mathieu-nayrolles.com/bumper/solr/select?q=*%3A*&fq=report_s%3A"+index+"&fq=type%3A(CHANGESET+OR+HUNKS)&sort=type+asc&wt=json&indent=true",
   	dataType: 'jsonp',
   	jsonp: 'json.wrf',
   	success: function(res){
@@ -194,21 +209,25 @@ function report_select(index){
 				fixItem = fixItem + "</code><pre>";
 				fix = fix + fixItem;
 				
+				$('.fix').html(fix);
+				
+				$(document).ready(function() {
+				$('pre code').each(function(i, block) {
+					hljs.highlightBlock(block);
+				  });
+				});
+				
 			}
 			
 		});
 		
-		$('.fix').html(fix);
 		
-		$(document).ready(function() {
-		$('pre code').each(function(i, block) {
-			hljs.highlightBlock(block);
-		  });
-		});
+		
+		
 	
    }});
 	
-	$("#bug_details").html(bug_detail);
+	
 }
 	
 $( "#search_form" ).submit(function( event ) {
@@ -217,7 +236,10 @@ $( "#search_form" ).submit(function( event ) {
 
   $("#download_button").hide();
   $.ajax({
-  	url: 'http://research.mathieu-nayrolles.com/bumper/solr/select?q=' + ((advanced) ? $("#field").val() : '(type:BUG AND report_t:"'+$("#field").val()+'" AND -churns:0) OR ({!parent which="type:BUG AND -churns 0"}type:CHANGESET AND fix_t:"'+$("#field").val()+'") OR ({!parent which="type:BUG AND -churns 0"}type:HUNKS AND fix_t:"'+$("#field").val()+'")&start='+startRow+'&rows='+endRow+'&wt=json'),
+	  
+	  
+	  
+  	url: 'http://research.mathieu-nayrolles.com/bumper/solr/select?q=' + ((advanced) ? $("#field").val() : '(type:"BUG" AND report_t:"'+$("#field").val()+'" AND -churns:0) OR ({!parent which="type:BUG"}{!parent which="type:CHANGESET"}type:"HUNKS" AND fix_t:"'+$("#field").val()+'") OR ({!parent which="type:BUG"}type:"CHANGESET" AND fix_t:"'+$("#field").val()+'")&start='+startRow+'&fl=id, project, title&rows='+endRow+'&wt=json'),
   	dataType: 'jsonp',
   	jsonp: 'json.wrf',
   	success: function(res){
@@ -249,7 +271,7 @@ $( "#search_form" ).submit(function( event ) {
   		$.each(res.response.docs, function( index, value ) {
 			
 			
-			var bug_thumbnail = "<div onclick='report_select("+index+")' class='bug_tumbnail'>"
+			var bug_thumbnail = "<div onclick='report_select(\""+value.id+"\")' class='bug_tumbnail'>"
 			+ "<div class='bug_project_left'>" + value.id + " (" + value.project + ")</div>"
 			+ "<div class='bug_title_left'>" + value.title.substring(0, 35); + "</div>"
 			+ "</div>";
