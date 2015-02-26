@@ -138,9 +138,15 @@ function report_select(index){
 				$.each(report.comment, function( index, value ){
 					var parsedComment = value.split('*`|`*');
 					var comment = "<div class='bug_result_comment'>"
-					+ "<p class='bug_result_commenter'> " + parsedComment[0] + " ("+ parsedComment[1] + ") @ " + parsedComment[2] +"<p>"
-					+ "<p class='bug_result_comment'> " + parsedComment[3].replace("\\n", "<br />") + "<p>"
-					+ "</div>";
+					+ "<p class='bug_result_commenter'> " + parsedComment[0] + " ("+ parsedComment[1] + ") @ " + parsedComment[2] +"<p>";
+					
+					console.log(parsedComment.length);
+					
+					if(parsedComment.length >= 4){
+						comment = comment + "<p class='bug_result_comment'> " + parsedComment[3].replace("\\n", "<br />") + "<p>";
+					}
+					
+					comment = comment + "</div>";
 
 					bug_detail = bug_detail + comment;
 				});
@@ -154,7 +160,7 @@ function report_select(index){
 				$("#bug_details").html(bug_detail);
 			
 			 $.ajax({
-				url:"http://research.mathieu-nayrolles.com/bumper/solr/select?q=*%3A*&fq=report_s%3A"+index+"&fq=type%3A(CHANGESET+OR+HUNKS)&sort=type+asc&wt=json&indent=true",
+				url:"http://research.mathieu-nayrolles.com/bumper/solr/select?q=*%3A*&fq=parent_bug%3A"+index+"&fq=type%3A(CHANGESET+OR+HUNKS)&sort=type+asc&wt=json&indent=true",
 				dataType: 'jsonp',
 				jsonp: 'json.wrf',
 				success: function(res){
@@ -173,7 +179,7 @@ function report_select(index){
 
 							fixItem = fixItem +"<ul class='changeset_file'>";
 
-							$.each(value.file, function (indexFile, ValueFile){
+							$.each(value.file_c, function (indexFile, ValueFile){
 
 								fixItem = fixItem + "<li>"+ValueFile+"</li>";
 
@@ -209,6 +215,8 @@ function report_select(index){
 								hljs.highlightBlock(block);
 							  });
 							});
+							
+							
 
 						}
 
@@ -227,16 +235,18 @@ $( "#search_form" ).submit(function( event ) {
   $("#list_results, #bug_details").empty();
 
   $("#download_button").hide();
+	
+	var searchQuery = $("#field").val();
+	searchQuery.replace("  ", " ");//Remove double spaces
+	searchQuery.replace(" ", "%2B");//Replace simples spaces by +
+	
   $.ajax({
-	  
-	  
-	  
-  	url: 'http://research.mathieu-nayrolles.com/bumper/solr/select?q=' + ((advanced) ? $("#field").val() : '(type:"BUG" AND report_t:"'+$("#field").val()+'" AND -churns:0) OR ({!parent which="type:BUG"}{!parent which="type:CHANGESET"}type:"HUNKS" AND fix_t:"'+$("#field").val()+'") OR ({!parent which="type:BUG"}type:"CHANGESET" AND fix_t:"'+$("#field").val()+'")&start='+startRow+'&fl=id, project, title&rows='+endRow+'&wt=json'),
+  	url: 'http://research.mathieu-nayrolles.com/bumper/solr/select?q=' + ((advanced) ? $("#field").val() : '(type%3ABUG+AND+report_t%3A(%22'+$("#field").val()+'%22))+OR+(%7B!parent+which%3D%22type%3ABUG%22%7Dfix_t%3A%22'+$("#field").val()+'%22)&start='+startRow+'&fl=id, project, title&rows='+endRow+'&wt=json'),
   	dataType: 'jsonp',
   	jsonp: 'json.wrf',
   	success: function(res){
 
-  		$("#search_statistics").html(res.response.numFound + " <i class='fa fa-bug'></i> found in " +res.responseHeader.QTime+" ms <i class='fa fa-clock-o'></i>");
+  		$("#search_statistics").html("~" + res.response.numFound + " <i class='fa fa-bug'></i> found in " +res.responseHeader.QTime+" ms <i class='fa fa-clock-o'></i>");
 		
 		
 		var pagination = "<ul>";
@@ -251,7 +261,13 @@ $( "#search_form" ).submit(function( event ) {
 		
 		$("#pagination").html(pagination);
 		
-		$("#pagination ul").css("width", ((res.response.numFound - res.response.numFound % 1000) / 1000) * 20 + "px");
+		var ulWidth = ((res.response.numFound - res.response.numFound % 1000) / 1000) * 20;
+		
+		if(ulWidth > 1100){
+				ulWidth = 1100;
+		}
+		
+		$("#pagination ul").css("width", ulWidth + "px");
 
   		if(res.response.numFound!="0"){
   			//$("#download_button").show();
