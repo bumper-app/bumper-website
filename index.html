@@ -164,7 +164,8 @@ function report_select(index){
 				$("#bug_details").html(bug_detail);
 			
 			 $.ajax({
-				url:"http://research.mathieu-nayrolles.com/bumper/solr/select?q=*%3A*&fq=parent_bug%3A"+index+"&fq=type%3A(CHANGESET+OR+HUNKS)&sort=type+asc&wt=json&indent=true",
+				 
+				url:"http://research.mathieu-nayrolles.com/bumper/solr/select?q=*%3A*&fq=parent_bug%3A"+index.replace("bug_Apache_", "bug_Apache") +"&fq=type%3A(CHANGESET+OR+HUNKS)&sort=type+asc&wt=json&indent=true",
 				dataType: 'jsonp',
 				jsonp: 'json.wrf',
 				success: function(res){
