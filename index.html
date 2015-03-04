@@ -135,22 +135,26 @@ function report_select(index){
 
 				+ '<h4>Comments</h4><div class="section_comment">';
 			
-				$.each(report.comment, function( index, value ){
-					var parsedComment = value.split('*`|`*');
-					var comment = "<div class='bug_result_comment'>"
-					+ "<p class='bug_result_commenter'> " + parsedComment[0] + " ("+ parsedComment[1] + ") @ " + parsedComment[2] +"<p>";
-					
-					console.log(parsedComment.length);
-					
-					if(parsedComment.length >= 4){
-						comment = comment + "<p class='bug_result_comment'> " + parsedComment[3].replace("\\n", "<br />") + "<p>";
-					}
-					
-					comment = comment + "</div>";
+				if(report.comments_nb > 0){
+					$.each(report.comment, function( index, value ){
 
-					bug_detail = bug_detail + comment;
-				});
+						console.log("qzdqzd");
+						var parsedComment = value.split('*`|`*');
+						var comment = "<div class='bug_result_comment'>"
+						+ "<p class='bug_result_commenter'> " + parsedComment[0] + " ("+ parsedComment[1] + ") @ " + parsedComment[2] +"<p>";
 
+						console.log(parsedComment.length);
+
+						if(parsedComment.length >= 4){
+							comment = comment + "<p class='bug_result_comment'> " + parsedComment[3].replace("\\n", "<br />") + "<p>";
+						}
+
+						comment = comment + "</div>";
+
+						bug_detail = bug_detail + comment;
+					});
+				}
+				
 				bug_detail = bug_detail + "</div>";
 
 				bug_detail = bug_detail + "<h4>Fix</h4><div class='section_fix'>";
