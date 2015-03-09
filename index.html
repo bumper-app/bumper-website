@@ -79,6 +79,7 @@ var response;
 var startRow = 0;
 var endRow = 1000;
 var advanced = false;
+$body = $("body");
 	
 function toogleQueryingMode(){
 	
@@ -109,6 +110,9 @@ function report_select(index){
 		url:"http://research.mathieu-nayrolles.com/bumper/solr/select?q=*%3A*&fq=id%3A"+index+"&fq=type%3A\"BUG\"&sort=type+asc&wt=json&indent=true",
 		dataType: 'jsonp',
 		jsonp: 'json.wrf',
+		beforeSend: function( xhr ) {
+		 
+    	},
 		success: function(res){
 			
 				var report = res.response.docs[0];
@@ -247,7 +251,7 @@ function report_select(index){
 	
 $( "#search_form" ).submit(function( event ) {
 	
-  
+
 	
   $("#list_results, #bug_details").empty();
 
@@ -262,10 +266,11 @@ $( "#search_form" ).submit(function( event ) {
   	dataType: 'jsonp',
   	jsonp: 'json.wrf',
 	beforeSend: function( xhr ) {
+		 $body.addClass("loading");
     },
   	success: function(res){
 		
-		//$("#loading").hide();
+		 $body.removeClass("loading");
 
   		$("#search_statistics").html("~" + res.response.numFound + " <i class='fa fa-bug'></i> found in " +res.responseHeader.QTime+" ms <i class='fa fa-clock-o'></i>");
 		
@@ -349,5 +354,8 @@ $(document).ready(function() {
 });
 </script>
 
+
+<div class="modal"></div>
+	
 </body>
 </html>
