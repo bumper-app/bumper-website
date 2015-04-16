@@ -56,7 +56,7 @@
 			<a href="https://www.concordia.ca/">Concordia University</a>, Montr&eacute;al, Qu&eacute;bec, Canada.
 		</div>
 		<div id="footer_right">
-			If you want to learn more about <a href="http://lucene.apache.org/solr/">Apache Solr</a>, the full-text search engine powering BUMPER, make sure to get yourself a copy of <a href="http://www.amazon.com/Mastering-Apache-Solr-practical-guide/dp/8192784509/ref=sr_1_1?ie=UTF8&qid=1400238519&sr=8-1&keywords=mastering+inkstall" title="Mastering Apache Solr">Mastering Apache Solr</a>. You can download the full dataset <a href="http://research.mathieu-nayrolles.com/bumper/bumper_dataset.zip">here</a>.
+			If you want to learn more about <a href="http://lucene.apache.org/solr/">Apache Solr</a>, the full-text search engine powering BUMPER, make sure to get yourself a copy of <a href="http://www.amazon.com/Mastering-Apache-Solr-practical-guide/dp/8192784509/ref=sr_1_1?ie=UTF8&qid=1400238519&sr=8-1&keywords=mastering+inkstall" title="Mastering Apache Solr">Mastering Apache Solr</a>. You can download the full dataset <a href="https://bumper-app.com/bumper_dataset.zip">here</a>.
 		</div>
 	</div>
 
@@ -251,7 +251,7 @@ $( "#search_form" ).submit(function( event ) {
 	searchQuery.replace(" ", "%2B");//Replace simples spaces by +
 	
   $.ajax({
-  	url: '"https://bumper-app.com/solr/select?q=' + ((advanced) ? $("#field").val() : '(type%3ABUG+AND+report_t%3A(%22'+$("#field").val()+'%22))+OR+(%7B!parent+which%3D%22type%3ABUG%22%7Dfix_t%3A%22'+$("#field").val()+'%22)&start='+startRow+'&fl=id, project, title&rows='+endRow+'&wt=json'),
+  	url: 'https://bumper-app.com/solr/select?q=' + ((advanced) ? $("#field").val() : '(type%3ABUG+AND+report_t%3A(%22'+$("#field").val()+'%22))+OR+(%7B!parent+which%3D%22type%3ABUG%22%7Dfix_t%3A%22'+$("#field").val()+'%22)&start='+startRow+'&fl=id, project, title&rows='+endRow+'&wt=json'),
   	dataType: 'jsonp',
   	jsonp: 'json.wrf',
 	beforeSend: function( xhr ) {
@@ -265,7 +265,7 @@ $( "#search_form" ).submit(function( event ) {
 		
 		$("#download_button a").each(function(index, value){
 			
-			$(this).attr("href", 'http://research.mathieu-nayrolles.com/bumper/solr/select?q=' + ((advanced) ? $("#field").val() : '(type%3ABUG+AND+report_t%3A(%22'+$("#field").val()+'%22))+OR+(%7B!parent+which%3D%22type%3ABUG%22%7Dfix_t%3A%22'+$("#field").val()+'%22)&start='+startRow+'&fl=id, project, title&rows='+endRow+'&wt=') + 
+			$(this).attr("href", 'https://bumper-app.com/solr/select?q=' + ((advanced) ? $("#field").val() : '(type%3ABUG+AND+report_t%3A(%22'+$("#field").val()+'%22))+OR+(%7B!parent+which%3D%22type%3ABUG%22%7Dfix_t%3A%22'+$("#field").val()+'%22)&start='+startRow+'&fl=id, project, title&rows='+endRow+'&wt=') + 
 						$(this).attr("id"));
 		});
 		
