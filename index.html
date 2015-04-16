@@ -107,7 +107,7 @@ function paginate(start, end){
 function report_select(index){
 	
 	 $.ajax({
-		url:"http://research.mathieu-nayrolles.com/bumper/solr/select?q=*%3A*&fq=id%3A"+index+"&fq=type%3A\"BUG\"&sort=type+asc&wt=json&indent=true",
+		url:"http://bumper-app.com/solr/select?q=*%3A*&fq=id%3A"+index+"&fq=type%3A\"BUG\"&sort=type+asc&wt=json&indent=true",
 		dataType: 'jsonp',
 		jsonp: 'json.wrf',
 		beforeSend: function( xhr ) {
