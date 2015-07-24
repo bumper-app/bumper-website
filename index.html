@@ -82,7 +82,7 @@ $body = $("body");
 function toogleQueryingMode(){
 	
 	if(!advanced){
-		$("#field").val('(type:"BUG" AND report_t:"'+$("#field").val()+'" AND -churns:0) OR ({!parent which="type:BUG"}{!parent which="type:CHANGESET"}type:"HUNKS" AND fix_t:"'+$("#field").val()+'") OR ({!parent which="type:BUG"}type:"CHANGESET" AND fix_t:"'+$("#field").val()+'")&start='+startRow+'&rows='+endRow+'&wt=json');
+		$("#field").val('({!join from=parent_bug to=id}fix_t:"'+$("#field").val()+'") OR (type:"BUG" AND report_t:"'+$("#field").val()+'")');
 		
 		$("#advanced_mode").text("Basic querying");
 		
@@ -275,14 +275,15 @@ $( "#search_form" ).submit(function( event ) {
   $("#download_button").hide();
 
   $.ajax({
-  	url: 'https://bumper-app.com/solr/select?q=' + ((advanced) ? $("#field").val() : '(type:"BUG" AND report_t:"'+$("#field").val()+'" AND -churns:0) OR ({!parent which="type:BUG"}{!parent which="type:CHANGESET"}type:"HUNKS" AND fix_t:"'+$("#field").val()+'") OR ({!parent which="type:BUG"}type:"CHANGESET" AND fix_t:"'+$("#field").val()+'")&start='+startRow+'&rows='+endRow+'&wt=json'),
+  	url: 'https://bumper-app.com/solr/select?q=' + ((advanced) ? $("#field").val()+'&start='+startRow+'&rows='+endRow+'&wt=json'
+  		: '({!join from=parent_bug to=id}fix_t:"'+$("#field").val()+'") OR (type:"BUG" AND report_t:"'+$("#field").val()+'")&start='+startRow+'&rows='+endRow+'&wt=json'),
   	dataType: 'jsonp',
   	jsonp: 'json.wrf',
 	beforeSend: function( xhr ) {
 		$body.addClass("loading");
     },
     error: function(){
-    	window.location.assign("https://bumper-app.com");
+    	//window.location.assign("https://bumper-app.com");
     },
   	success: function(res){
 		
@@ -292,7 +293,7 @@ $( "#search_form" ).submit(function( event ) {
 		
 		$("#download_button a").each(function(index, value){
 			
-			$(this).attr("href", 'https://bumper-app.com/solr/select?q=' + ((advanced) ? encodeURIComponent($("#field").val()) : '(type%3ABUG+AND+report_t%3A(%22'+$("#field").val()+'%22))+OR+(%7B!parent+which%3D%22type%3ABUG%22%7Dfix_t%3A%22'+encodeURIComponent($("#field").val())+'%22)&start='+startRow+'&fl=id, project, title&rows='+endRow+'&wt=') + 
+			$(this).attr("href", 'https://bumper-app.com/solr/select?q=' + ((advanced) ? encodeURIComponent($("#field").val()+"&start=0&rows=1000&wt=json") : '({!join from=parent_bug to=id}fix_t:"'+$("#field").val()+'") OR (type:"BUG" AND report_t:"'+$("#field").val()+'")&start='+startRow+'&rows='+endRow+'&wt=') + 
 						$(this).attr("id"));
 		});
 		
