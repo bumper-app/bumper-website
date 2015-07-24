@@ -3,14 +3,14 @@
 <head>
 	<title>BUMPER. Bugs Metarepository for developers and researchers.</title>
 	<link rel="stylesheet" type="text/css" href="css.css">
-	<link href="//fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet" type="text/css">
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	<link rel="icon" href="favicon.ico" type="image/x-icon">
-	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js" type="text/javascript"></script>
-	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
-	<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
 </head>
 <body>
 
@@ -245,13 +245,9 @@ $( "#search_form" ).submit(function( event ) {
   $("#list_results, #bug_details").empty();
 
   $("#download_button").hide();
-	
-	var searchQuery = $("#field").val();
-	searchQuery.replace("  ", " ");//Remove double spaces
-	searchQuery.replace(" ", "%2B");//Replace simples spaces by +
-	
+
   $.ajax({
-  	url: 'https://bumper-app.com/solr/select?q=' + ((advanced) ? $("#field").val() : '(type%3ABUG+AND+report_t%3A(%22'+$("#field").val()+'%22))+OR+(%7B!parent+which%3D%22type%3ABUG%22%7Dfix_t%3A%22'+$("#field").val()+'%22)&start='+startRow+'&fl=id, project, title&rows='+endRow+'&wt=json'),
+  	url: 'https://bumper-app.com/solr/select?q=' + ((advanced) ? $("#field").val() : '(type:"BUG" AND report_t:"'+$("#field").val()+'" AND -churns:0) OR ({!parent which="type:BUG"}{!parent which="type:CHANGESET"}type:"HUNKS" AND fix_t:"'+$("#field").val()+'") OR ({!parent which="type:BUG"}type:"CHANGESET" AND fix_t:"'+$("#field").val()+'")&start='+startRow+'&rows='+endRow+'&wt=json'),
   	dataType: 'jsonp',
   	jsonp: 'json.wrf',
 	beforeSend: function( xhr ) {
@@ -265,7 +261,7 @@ $( "#search_form" ).submit(function( event ) {
 		
 		$("#download_button a").each(function(index, value){
 			
-			$(this).attr("href", 'https://bumper-app.com/solr/select?q=' + ((advanced) ? $("#field").val() : '(type%3ABUG+AND+report_t%3A(%22'+$("#field").val()+'%22))+OR+(%7B!parent+which%3D%22type%3ABUG%22%7Dfix_t%3A%22'+$("#field").val()+'%22)&start='+startRow+'&fl=id, project, title&rows='+endRow+'&wt=') + 
+			$(this).attr("href", 'https://bumper-app.com/solr/select?q=' + ((advanced) ? encodeURIComponent($("#field").val()) : '(type%3ABUG+AND+report_t%3A(%22'+$("#field").val()+'%22))+OR+(%7B!parent+which%3D%22type%3ABUG%22%7Dfix_t%3A%22'+encodeURIComponent($("#field").val())+'%22)&start='+startRow+'&fl=id, project, title&rows='+endRow+'&wt=') + 
 						$(this).attr("id"));
 		});
 		
