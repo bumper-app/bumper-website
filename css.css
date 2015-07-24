@@ -99,6 +99,11 @@ span.acro{
 	margin: auto;
 }
 
+#api_body{
+	width: 1100px;
+	margin: auto;
+}
+
 #stats{
 	text-align: center;
 	width: 960px;
@@ -443,6 +448,14 @@ h4:hover{
                 no-repeat;
 }
 
+ul.float-ul{
+	margin: 0px;
+	padding:0px;
+	width: 33%;
+	height: 380px;
+	float: left;
+}
+
 /* When the body has the loading class, we turn
    the scrollbar off with overflow:hidden */
 body.loading {
@@ -454,3 +467,4 @@ body.loading {
 body.loading .modal {
     display: block;
 }
+
