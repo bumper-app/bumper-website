@@ -199,20 +199,10 @@ OR ({!parent which="type:BUG"}type:"CHANGESET" AND fix_t:"TERMS")</code></pre>
 			
 	<p>You'll have to replace <b>YOUR_ADVANCED_QUERY</b> by a valid advanced query and <b>YOUR_DATA_TYPE</b> by xml (default), csv or json. Alternatively, you can download the whole dataset at <a href="https://bumper-app.com/bumper_dataset.zip">https://bumper-app.com/bumper_dataset.zip</a></p>
 
-	<h4>Some Queries</h4>
+	<h4>Direct Download Query Example</h4>
 
 	<ul>
 		
-		<li><a href='https://bumper-app.com/#!/advanced/(type:"BUG" AND report_t:"JAVA" AND -churns:0) 
-OR ({!parent which="type:BUG"}{!parent which="type:CHANGESET"}type:"HUNKS" AND fix_t:"JAVA") 
-OR ({!parent which="type:BUG"}type:"CHANGESET" AND fix_t:"JAVA")'>https://bumper-app.com/#!/(type:"BUG" AND report_t:"JAVA" AND -churns:0) 
-OR ({!parent which="type:BUG"}{!parent which="type:CHANGESET"}type:"HUNKS" AND fix_t:"JAVA") 
-OR ({!parent which="type:BUG"}type:"CHANGESET" AND fix_t:"JAVA")</a></li>
-		<li><a href='https://bumper-app.com/#!/advanced/(type:"BUG" AND report_t:"JAVA" AND -churns:0) 
-OR ({!parent which="type:BUG"}{!parent which="type:CHANGESET"}type:"HUNKS" AND fix_t:"EE") 
-OR ({!parent which="type:BUG"}type:"CHANGESET" AND fix_t:"EE")'>https://bumper-app.com/#!/(type:"BUG" AND report_t:"JAVA" AND -churns:0) 
-OR ({!parent which="type:BUG"}{!parent which="type:CHANGESET"}type:"HUNKS" AND fix_t:"EE") 
-OR ({!parent which="type:BUG"}type:"CHANGESET" AND fix_t:"EE")</a></li>
 		<li><a href="https://bumper-app.com/solr/select?q=(type%3ABUG+AND+report_t%3A(%22*%22))+OR+(%7B!parent+which%3D%22type%3ABUG%22%7Dfix_t%3A%22*%22)&start=0&fl=id,%20project,%20title&rows=1000&wt=json&json.wrf">https://bumper-app.com/solr/select?q=(type%3ABUG+AND+report_t%3A(%22*%22))+OR+(%7B!parent+which%3D%22type%3ABUG%22%7Dfix_t%3A%22*%22)&start=0&fl=id,%20project,%20title&rows=1000&wt=json&json.wrf</a></li>
 	</ul>
 
