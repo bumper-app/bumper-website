@@ -11,6 +11,29 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js" type="text/javascript"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+	<script type="text/javascript">
+
+		var baseSearch = "*";
+
+		// Add startsWith if it does nt exist
+		if (typeof String.prototype.startsWith != 'function') {
+		  // see below for better implementation!
+		  String.prototype.startsWith = function (str){
+		    return this.indexOf(str) === 0;
+		  };
+		}
+
+		 if(window.location.hash) {
+		    var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
+
+			if(hash.startsWith("!/query/")){
+				baseSearch = hash.replace("!/query/", "");
+				console.log(hash.replace("!/query/", ""));
+			}
+		}
+		  
+
+	</script>
 </head>
 <body>
 
@@ -98,11 +121,11 @@ function paginate(start, end){
 function report_select(index){
 	
 	 $.ajax({
-		url:"https://bumper-app.com/solr/select?q=*%3A*&fq=id%3A"+index+"&fq=type%3A\"BUG\"&sort=type+asc&wt=json&indent=true",
+		url:"https://bumper-app.com/solr/select?q=*%3A*&fq=id%3A"+index+"&fq=type%3A\"BUG\"&sort=type+asc&wt=json",
 		dataType: 'jsonp',
 		jsonp: 'json.wrf',
 		beforeSend: function( xhr ) {
-		 
+		 	window.location.hash = '#!/query/'+index;
     	},
 		success: function(res){
 			
@@ -325,7 +348,7 @@ $(document).ready(function() {
 	// if text input field value is not empty show the "X" button
 	$("#field").keyup(function() {
 		$("#x").fadeIn();
-		if ($.trim($("#field").val()) == "") {
+		if ($.trim($("#field").val()) == ""){
 			$("#x").fadeOut();
 		}
 	});
@@ -335,9 +358,9 @@ $(document).ready(function() {
 		$(this).hide();
 	});
 	
-	$("#field").val("*");
+	$("#field").val(baseSearch);
 	$("#submit").click();
-	$("#field").val("");
+	$("#field").val(baseSearch);
 });
 </script>
 
