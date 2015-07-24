@@ -39,6 +39,7 @@
 				<input id="field" name="field" type="text" />
 				<div id="delete"><span id="x">x</span></div>
 				<input  id="submit" name="submit" type="submit" value="&#xf002;" />
+				<span class="error">Your query is not valid.</span>
 				<a id="advanced_mode" href="javascript:toogleQueryingMode();">Advanced querying</a>
 			</form>
 		</div>
@@ -278,12 +279,11 @@ $( "#search_form" ).submit(function( event ) {
   	url: 'https://bumper-app.com/solr/select?q=' + ((advanced) ? $("#field").val()+'&start='+startRow+'&rows='+endRow+'&wt=json'
   		: '({!join from=parent_bug to=id}fix_t:%27'+$("#field").val()+'%27) OR (type:"BUG" AND report_t:%27'+$("#field").val()+'%27)&start='+startRow+'&rows='+endRow+'&wt=json'),
   	dataType: 'jsonp',
+  	timeout : 5000,
   	jsonp: 'json.wrf',
 	beforeSend: function( xhr ) {
 		$body.addClass("loading");
-    },
-    error: function(){
-    	//window.location.assign("https://bumper-app.com");
+		$(".error").hide();
     },
   	success: function(res){
 		
@@ -344,7 +344,11 @@ $( "#search_form" ).submit(function( event ) {
 
 		});
 
-  	}	
+  	},
+    error: function (xhr, errorType, exception) {
+    	$(".error").show();
+    	$body.removeClass("loading");
+    },
   });
 
   event.preventDefault();
