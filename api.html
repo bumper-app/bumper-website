@@ -113,7 +113,7 @@
 
 	<pre><code class="javascript">(bug_status:"RESOLVED" NOR bug_severity:"MAJOR" -churns:0) AND Summary:"Fix" OR Summary:"Closed" </code></pre>
 
-	<p>will retrieve all bugs that have a status at <b>RESOLVED</b> (exclusif) or the one that have a <b>MAJOR</b> severity. Bugs that don't have any modification (churns) will be exluded. Then, the result of the first group will be merged with all the bugs that have a summary containing <b>Fix</b> or <b>closed</b>.</p>
+	<p>will retrieve all bugs that have a status at <b>RESOLVED</b> (exclusive) or the one that have a <b>MAJOR</b> severity. Bugs that don't have any modification (churns) will be excluded. Then, the result of the first group will be merged with all the bugs that have a summary containing <b>Fix</b> or <b>closed</b>.</p>
 
 	<h4>Querying Numbers</h4>
 
@@ -155,6 +155,7 @@
 	<p>You can combine parent-child relationship in order to query grand-parent child:</p>
 
 	<pre><code class="javascript">({!parent which="type:BUG"}{!parent which="type:CHANGESET"}type:"HUNKS" AND fix_t:"TERMS")</code></pre>
+
 
 	<h4>Basic query mode query</h4>
 
