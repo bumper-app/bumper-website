@@ -76,7 +76,7 @@ var response;
 var startRow = 0;
 var endRow = 1000;
 var advanced = false;
-var baseSearch = "*";
+var baseSearch = "";
 $body = $("body");
 	
 function toogleQueryingMode(){
@@ -276,7 +276,7 @@ $( "#search_form" ).submit(function( event ) {
 
   $.ajax({
   	url: 'https://bumper-app.com/solr/select?q=' + ((advanced) ? $("#field").val()+'&start='+startRow+'&rows='+endRow+'&wt=json'
-  		: '({!join from=parent_bug to=id}fix_t:"'+$("#field").val()+'") OR (type:"BUG" AND report_t:"'+$("#field").val()+'")&start='+startRow+'&rows='+endRow+'&wt=json'),
+  		: '({!join from=parent_bug to=id}fix_t:%27'+$("#field").val()+'%27) OR (type:"BUG" AND report_t:%27'+$("#field").val()+'%27)&start='+startRow+'&rows='+endRow+'&wt=json'),
   	dataType: 'jsonp',
   	jsonp: 'json.wrf',
 	beforeSend: function( xhr ) {
