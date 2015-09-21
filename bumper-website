@@ -1,0 +1,9 @@
+<VirtualHost *>
+        ServerAdmin contact@bumper-app.com
+        ServerName  bumper-app.com
+        ServerAlias bumper-app.com
+
+        # Indexes + Directory Root.
+        DirectoryIndex index.html
+        DocumentRoot /var/www/html/bumper-website
+</VirtualHost>
