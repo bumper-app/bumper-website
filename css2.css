@@ -1,0 +1,192 @@
+/* SIZES */
+
+html, body
+{
+    font-family: 'Nunito', sans-serif;
+    height: 100%;
+}
+
+@media (max-width:767px) {
+
+    #wrapper {
+      padding-left: 0;
+    }
+
+    #sidebar-wrapper {
+      left: 0;
+    }
+
+    #wrapper.active {
+      position: relative;
+      left: 250px;
+    }
+
+    #wrapper.active #sidebar-wrapper {
+      left: 250px;
+      width: 250px;
+      transition: all 0.4s ease 0s;
+    }
+
+}
+
+.content{
+  padding-left: 50px;
+}
+
+/* COLORS */
+
+.yellow{
+    color:#EDC240;
+}
+
+.red{
+    color:#BC2021;
+}
+
+.purple{
+    color:#88166D;
+}
+
+.blue{
+    color:#02549E;
+}
+
+.grey{
+    color:#6b757d;
+}
+
+.white{
+    color:white;
+}
+
+.bg-black{
+    background-color: #292f32;
+}
+
+/* BORDERS */
+
+.bottom-border{
+    border-bottom: 1px solid #f0f4f9;
+}
+
+.right-border{
+    border-right: 1px solid #f0f4f9;
+}
+
+/* POSITIONS */
+
+.center{
+    text-align: center;
+}
+
+
+/* MISC */
+
+.menu ul{
+  display: inline;
+}
+
+.menu ul li{
+  margin-top: 5px;
+  float: left;
+  margin-right: 20px;
+  text-transform: uppercase;
+}
+
+.menu ul li a{
+  text-decoration: none;
+  color:#6b757d;
+}
+
+.menu ul li a:hover{
+  text-decoration: underline;
+}
+
+.logo{
+  background-image: url('img/logo.png');
+  background-repeat: no-repeat;
+  background-size:   50px 50px; 
+  background-position: center center;
+  height: 75px;
+  float: right;
+  width: 75px;
+}
+
+.search-box, .menu{
+    font-size: 20px;
+    height: 35px;
+    margin: 20px 0px 0px 20px;
+}
+
+.search-box input{
+    outline: 0;
+    width: 90%;
+}
+
+
+i{
+    margin-right: 5px;
+}
+
+#wrapper {
+  padding-left: 250px;
+  transition: all 0.4s ease 0s;
+}
+
+#sidebar-wrapper {
+  margin-left: -250px;
+  left: 250px;
+  width: 250px;
+  background: #292f32;
+  position: fixed;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 1000;
+  border-bottom: 7px solid #af4439;
+  transition: all 0.4s ease 0s;
+}
+
+#page-content-wrapper {
+  width: 100%;
+}
+
+.sidebar-nav {
+  position: absolute;
+  top: 0;
+  width: 250px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar-nav h2{
+    margin-top: 25px;
+    font-size: 15px;
+    text-transform: uppercase;
+}
+
+.sidebar-nav a{
+    color:#6b757d;
+}
+
+ul{
+    list-style-type: none;
+}
+
+.sidebar-nav{
+    color:#6b757d;
+}
+
+.results{
+    margin-top: 150px;
+    color:white;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+h2{
+  padding-bottom: 15px;
+  font-family: 'Nunito', sans-serif;
+  width: 100%;
+}
