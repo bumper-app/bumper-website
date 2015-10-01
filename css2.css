@@ -4,6 +4,7 @@ html, body
 {
     font-family: 'Nunito', sans-serif;
     height: 100%;
+    overflow: hidden;
 }
 
 @media (max-width:767px) {
@@ -189,4 +190,93 @@ h2{
   padding-bottom: 15px;
   font-family: 'Nunito', sans-serif;
   width: 100%;
+  text-transform: uppercase;
+}
+
+.icons i{
+  float: left;
+  font-size: 30px;
+  margin-top: 15px;
+}
+
+p.description{
+  color:#6b757d;
+  text-align: justify;
+}
+
+span.long-description, ul.statistiques{
+  display: none;
+}
+
+ul.statistiques li{
+  width: 30%;
+  float: left;
+}
+
+.row-bug{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 165px;
+}
+
+a:hover{
+  cursor: pointer;
+}
+
+span.nb-live-save{
+  font-size: 15px;
+  position: absolute;
+}
+
+i.persicon-netbeans{
+  speak: none;
+  font-style: normal;
+  font-weight: 400;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-image: url('img/plainicon.com-50290-32px-fdd.png');
+  background-position: center center;
+  background-size: cover;
+  height: 30px;
+  width: 30px;
+}
+
+h4:hover{
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.bug_result_commenter{
+  border-bottom: 1px solid #6b757d;
+}
+
+#search_form{
+  width: 95%;
+  float: right;
+}
+
+#search_form input{
+  border : 1px solid #6b757d
+}
+
+i.fa.fa-life-ring:hover{
+  cursor: pointer;
+}
+
+i.fa.fa-life-ring.actif{
+  color:red;
+}
+
+div.row-bug.actif{
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#list_results, #details-bug{
+  overflow-x : hidden;
+  overflow-y : scroll;
 }

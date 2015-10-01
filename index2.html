@@ -10,7 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js" type="text/javascript"></script>
 
-
+    <script src="js/main.js" type="text/javascript"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
@@ -100,11 +100,13 @@
     <div id="page-content-wrapper">
         <div class="page-content">
             <div class="container-fluid">
-                <div class="row bottom-border">
+                <div id="header" class="row bottom-border">
                     <div class="col-md-12">
                         <div class="col-md-6 search-box">
                             <i class="fa fa-search grey"></i>
-                            <input id="field" name="field" type="text" />
+                            <form id="search_form">
+                                <input id="field" name="field" type="text" />
+                            </form>
                         </div>
                         <div class="col-md-5 menu grey">
                             <ul>
@@ -120,23 +122,57 @@
 
                 <div class="row">
                     
-                    <div class="col-md-6 content">
+                    <div id="list_results" class="col-md-6 content">
 
                         <h2 class="title bottom-border">Bug Reports</h2>
 
+                        <div class="row">
+                            
+                            <div class="col-md-1 icons">
+                                
+                                <i class="fa fa-life-ring"></i>
+                                <i class="devicon-apache-plain"></i>
+                                <i class="devicon-java-plain"></i>
+                            </div>
+                            <div class="col-md-11">
+                                
+                                <h4>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</h4>
+
+                                <p id="description-1" class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec convallis turpis tempor enim molestie, vel dignissim ligula aliquam. Vestibulum sit amet cursus leo. Donec et aliquet magna, quis congue nisi. Quisque consectetur vel nulla eu gravida. Pellentesque non est sit amet quam malesuada tempus. Nam volutpat condimentum ullamcorper. <a href="#" id="more-1" onclick="toggleShortLongDescription('1');">more...</a> <span class="long-description" id="long-description-1">Integer congue volutpat quam nec pretium. Sed semper neque non laoreet aliquet. Donec tempor nunc non dolor molestie convallis. Nulla et nulla ipsum. Donec sit amet ante in nisi efficitur malesuada a quis quam.
+
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi odio nulla, pretium eu eleifend sit amet, molestie ac nunc. Morbi mattis, nisl a faucibus aliquet, nunc diam scelerisque felis, cursus congue nibh. <a href="#" onclick="toggleShortLongDescription('1');">less...</a></span></p> 
+                                
+                                <ul class="statistiques" id="statistiques-1">
+                                    
+                                    <li>Reporter : Mathieu</li>
+                                    <li>Assigned : Charles</li>
+                                    <li>Report Date : 1 june 2013</li>
+                                    <li>Fixing Time : 2 days</li>
+                                    <li>Severity : Major</li>
+                                    <li>Sub-project : Major</li>
+                                    <li>Files : Major</li>
+                                    <li>Churns : 25</li>
+                                    <li>Hunks : 25</li>
+
+                                </ul>
+
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="col-md-6 content">
+                    <div id="details-bug" class="col-md-6 content">
 
                         <div class="row">
-                            <div class="col-md-12">
+                            <div id="fixes" class="col-md-12">
 
                                 <h2 class="title bottom-border">Bug Fix</h2>
+
+
 
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
+                            <div id="comments" class="col-md-12">
 
                                 <h2 class="title bottom-border">Comments</h2>
 
