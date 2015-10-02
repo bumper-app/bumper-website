@@ -217,6 +217,7 @@ ul.statistiques li{
   overflow: hidden;
   text-overflow: ellipsis;
   min-height: 165px;
+  margin-right: 15px;
 }
 
 a:hover{

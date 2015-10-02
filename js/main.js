@@ -385,6 +385,7 @@ function ajaxRequest(){
 
             ajaxComments(res.response.docs[0].id);
             ajaxFix(res.response.docs[0].id);
+            $( ".row-bug:first").addClass("actif");
 
             $("#result-count").html(res.response.numFound);
             $("#time").html(res.responseHeader.QTime / 100);
