@@ -6,11 +6,23 @@ String.prototype.startsWith = function (str){
     return this.indexOf(str) === 0;
 };
 
+Array.prototype.remove = function() {
+    var what, a = arguments, L = a.length, ax;
+    while (L && this.length) {
+        what = a[--L];
+        while ((ax = this.indexOf(what)) !== -1) {
+            this.splice(ax, 1);
+        }
+    }
+    return this;
+};
+
 var response;
 var startRow = 0;
-var endRow = 1000;
+var endRow = 100;
 var advanced = false;
 var baseSearch = "";
+var languages = [];
 $body = $("body");
     
 function toogleQueryingMode(){
@@ -40,10 +52,29 @@ if(window.location.hash) {
         baseSearch = hash.replace("!/advanced/", "");
     }
 }
+
+function languageClick(language){
+
+    if($.inArray(language, languages) > -1){
+        
+        languages.remove(language);
+        $("[data='"+language+"']").removeClass('actif');
+    }else{
+        languages.push(language);
+        $("[data='"+language+"']").addClass('actif');
+
+    }
+
+    $( "#fixes > .row" ).remove();
+    $( "#comments > .row" ).remove();
+    $( "#list_results > .row" ).remove();
+
+    ajaxRequest();
+}
     
 function paginate(){
     startRow = endRow;
-    endRow = endRow + 1000;
+    endRow = endRow + 100;
     $("#submit").click();  
 }
 
@@ -367,9 +398,35 @@ function savedDay(id, rowId){
 
 function ajaxRequest(){
 
+    languageFilter = '';
+
+    actifLanguages =  $("li.language-filter").length;
+
+    if(languages.length != actifLanguages){
+
+        languageFilter = "AND (";
+        for (var i = 0; i < languages.length - 2; i++) {
+            languageFilter = languageFilter + 'file:*.' + languages[i] + ' OR ';
+        }
+
+        languageFilter = languageFilter + 'file:*.' + languages[languages.length - 1] + ")";
+    }
+
+    console.log(languageFilter);
+
+
     $.ajax({
         url: 'https://bumper-app.com/api/select?q=' + ((advanced) ? $("#field").val()+'&sort=live_saver+desc&start='+startRow+'&rows='+endRow+'&wt=json'
-            : '({!join from=parent_bug to=id}fix_t:%27'+$("#field").val()+'%27) OR (type:"BUG" AND report_t:%27'+$("#field").val()+'%27)&sort=live_saver+desc&start='+startRow+'&rows='+endRow+'&wt=json'),
+            : '({!join from=parent_bug to=id}fix_t:%27'+
+                $("#field").val()+
+                '%27) OR (type:"BUG" AND report_t:%27'+
+                $("#field").val()+
+                languageFilter + 
+                '%27)&sort=live_saver+desc&start='+
+                startRow+
+                '&rows='+
+                endRow+
+                '&wt=json'),
         dataType: 'jsonp',
         timeout : 5000,
         jsonp: 'json.wrf',
@@ -413,6 +470,15 @@ $(document).ready(function() {
     });
 
     $("#list_results, #details-bug").css("height", $( document ).height() - $("#header").height());
+
+    $.each($('.language-filter'), function( index, filter ) {
+
+        $(filter).attr('onclick', 'languageClick("' + $(filter).attr('data') +'")');
+
+        languages.push($(filter).attr('data'));
+        $("[data='"+$(filter).attr('data')+"']").addClass('actif');
+
+    });
 
     $("#field").val(baseSearch);
     $("#search_form").submit();

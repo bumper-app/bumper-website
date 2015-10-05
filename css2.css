@@ -281,3 +281,12 @@ div.row-bug.actif{
   overflow-x : hidden;
   overflow-y : scroll;
 }
+
+li.language-filter{
+  cursor: pointer;
+}
+
+li.language-filter.actif{
+  color:white;
+  
+}
