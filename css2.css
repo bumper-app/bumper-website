@@ -282,11 +282,10 @@ div.row-bug.actif{
   overflow-y : scroll;
 }
 
-li.language-filter{
+li.language-filter, li.dataset-filter{
   cursor: pointer;
 }
 
-li.language-filter.actif{
+li.language-filter.actif, li.dataset-filter.actif{
   color:white;
-  
 }

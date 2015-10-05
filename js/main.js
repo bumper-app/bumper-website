@@ -23,6 +23,7 @@ var endRow = 100;
 var advanced = false;
 var baseSearch = "";
 var languages = [];
+var datasets = [];
 $body = $("body");
     
 function toogleQueryingMode(){
@@ -63,6 +64,23 @@ function languageClick(language){
         languages.push(language);
         $("[data='"+language+"']").addClass('actif');
 
+    }
+
+    $( "#fixes > .row" ).remove();
+    $( "#comments > .row" ).remove();
+    $( "#list_results > .row" ).remove();
+
+    ajaxRequest();
+}
+
+function datasetClick(dataset){
+    if($.inArray(dataset, datasets) > -1){
+        
+        datasets.remove(dataset);
+        $("[data='"+dataset+"']").removeClass('actif');
+    }else{
+        datasets.push(dataset);
+        $("[data='"+dataset+"']").addClass('actif');
     }
 
     $( "#fixes > .row" ).remove();
@@ -323,10 +341,13 @@ function languageIcon(languageExtension){
             return '<i title="javascript" class="devicon-javascript-plain"></i>';
         case 'py':
             return '<i title="pyton" class="devicon-python-plain"></i>';
-        case 'cc':
-            return '<i title="c++" class="devicon-cplusplus-plain"></i>';
         case 'java':
             return '<i title="java" class="devicon-java-plain"></i>';
+        case 'php':
+            return '<i title="php" class="devicon-php-plain"></i>';
+        case 'cpp':
+        case 'cc':
+            return '<i title="c++" class="devicon-cplusplus-plain"></i>';
         default:
             return '<i title="'+languageExtension+'" class="fa fa-code"></i>';
     }
@@ -336,7 +357,7 @@ function projectIcon(project){
     switch(project) {
         case 'netbeans':
             return '<i title="netbeans" class="persicon-netbeans"></i>';
-        case 'apache':
+        case 'Apache':
             return '<i title="Apache Software Foundation" class="devicon-apache-plain"></i>';
         default :
             return '<i title="'+project+'" class="fa fa-code"></i>';
@@ -399,10 +420,9 @@ function savedDay(id, rowId){
 function ajaxRequest(){
 
     languageFilter = '';
+    datasetFilter = '';
 
-    actifLanguages =  $("li.language-filter").length;
-
-    if(languages.length != actifLanguages){
+    if(languages.length != $("li.language-filter").length){
 
         languageFilter = "AND (";
         for (var i = 0; i < languages.length - 2; i++) {
@@ -412,8 +432,15 @@ function ajaxRequest(){
         languageFilter = languageFilter + 'file:*.' + languages[languages.length - 1] + ")";
     }
 
-    console.log(languageFilter);
+    if(datasets.length != $("li.dataset-filter").length){
 
+        datasetFilter = "+AND+(";
+        for (var i = 0; i < datasets.length - 2; i++) {
+            datasetFilter = datasetFilter + 'dataset%3A' + datasets[i] + '+OR+';
+        }
+
+        datasetFilter = datasetFilter + 'dataset%3A' + datasets[datasets.length - 1] + ")";
+    }
 
     $.ajax({
         url: 'https://bumper-app.com/api/select?q=' + ((advanced) ? $("#field").val()+'&sort=live_saver+desc&start='+startRow+'&rows='+endRow+'&wt=json'
@@ -422,6 +449,7 @@ function ajaxRequest(){
                 '%27) OR (type:"BUG" AND report_t:%27'+
                 $("#field").val()+
                 languageFilter + 
+                datasetFilter +
                 '%27)&sort=live_saver+desc&start='+
                 startRow+
                 '&rows='+
@@ -476,6 +504,15 @@ $(document).ready(function() {
         $(filter).attr('onclick', 'languageClick("' + $(filter).attr('data') +'")');
 
         languages.push($(filter).attr('data'));
+        $("[data='"+$(filter).attr('data')+"']").addClass('actif');
+
+    });
+
+    $.each($('.dataset-filter'), function( index, filter ) {
+
+        $(filter).attr('onclick', 'datasetClick("' + $(filter).attr('data') +'")');
+
+        datasets.push($(filter).attr('data'));
         $("[data='"+$(filter).attr('data')+"']").addClass('actif');
 
     });
