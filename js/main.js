@@ -1,8 +1,8 @@
-String.prototype.splice = function( idx, rem, s ) {
-    return (this.slice(0,idx) + s + this.slice(idx + Math.abs(rem)));
+String.prototype.splice = function (idx, rem, s) {
+    return (this.slice(0, idx) + s + this.slice(idx + Math.abs(rem)));
 };
 
-String.prototype.startsWith = function (str){
+String.prototype.startsWith = function (str) {
     return this.indexOf(str) === 0;
 };
 
@@ -25,26 +25,33 @@ var baseSearch = "";
 var languages = [];
 var datasets = [];
 $body = $("body");
-    
+
+function suggestionClick(suggestion){
+  console.log(suggestion);
+
+  $("input[type='search']").val(suggestion);
+  $(".searchbox").submit();
+}
+
 function toogleQueryingMode(){
-    
+
     if(!advanced){
-        $("#field").val('({!join from=parent_bug to=id}fix_t:"'+$("#field").val()+'") OR (type:"BUG" AND report_t:"'+$("#field").val()+'")');
-        
-        $("#advanced_mode").text("Basic querying");
-        
+        //$("#field").val('({!join from=parent_bug to=id}fix_t:"'+$("#field").val()+'") OR (type:"BUG" AND report_t:"'+$("#field").val()+'")');
+
+        $("#query-mode").text("Basic query mode");
+
     }else{
-        $("#advanced_mode").text("Advanced querying");
-        $("#field").val("");
+        $("#query-mode").text("Advanced query mode");
+        //$("#field").val("");
     }
-    
+
     advanced = !advanced;
-    
+
 }
 
 if(window.location.hash) {
     //Puts hash in variable, and removes the # character
-    var hash = window.location.hash.substring(1); 
+    var hash = window.location.hash.substring(1);
 
     if(hash.startsWith("!/query/")){
         baseSearch = hash.replace("!/query/", "");
@@ -57,7 +64,7 @@ if(window.location.hash) {
 function languageClick(language){
 
     if($.inArray(language, languages) > -1){
-        
+
         languages.remove(language);
         $("[data='"+language+"']").removeClass('actif');
     }else{
@@ -75,7 +82,7 @@ function languageClick(language){
 
 function datasetClick(dataset){
     if($.inArray(dataset, datasets) > -1){
-        
+
         datasets.remove(dataset);
         $("[data='"+dataset+"']").removeClass('actif');
     }else{
@@ -89,11 +96,11 @@ function datasetClick(dataset){
 
     ajaxRequest();
 }
-    
+
 function paginate(){
     startRow = endRow;
     endRow = endRow + 100;
-    $("#submit").click();  
+    $("#submit").click();
 }
 
 function constructComments(bug){
@@ -125,7 +132,7 @@ function constructChangeset(changeset){
     var changesetHtml = '<div class="row"><div class="col-md-11">';
 
     changesetHtml = changesetHtml + "<div class='changeset'>";
-    changesetHtml = changesetHtml + "<div class='changeset_summary'><i>" + changeset.id + 
+    changesetHtml = changesetHtml + "<div class='changeset_summary'><i>" + changeset.id +
         "</i> " + changeset.summary + "</div>";
 
     changesetHtml = changesetHtml +"<ul class='changeset_file'>";
@@ -169,8 +176,8 @@ function constructFix(fixes){
 
     $.each(fixes, function( index, value ) {
 
-        fix += (value.type == "CHANGESET") ? 
-            constructChangeset(value) 
+        fix += (value.type == "CHANGESET") ?
+            constructChangeset(value)
             : constructHunk(value);
     });
 
@@ -179,7 +186,7 @@ function constructFix(fixes){
 
 function ajaxFix(bug_id){
     $.ajax({
-                 
+
         url:"https://bumper-app.com/api/select?q=*%3A*&fq=parent_bug%3A"+bug_id.replace("bug_Apache_", "bug_Apache") +"&fq=type%3A(CHANGESET+OR+HUNKS)&sort=type+asc&wt=json&indent=true",
         dataType: 'jsonp',
         jsonp: 'json.wrf',
@@ -218,7 +225,7 @@ function mostCommonTerm(array)
         if(modeMap[el] === null)
             modeMap[el] = 1;
         else
-            modeMap[el]++;  
+            modeMap[el]++;
         if(modeMap[el] > maxCount)
         {
             maxEl = el;
@@ -241,7 +248,7 @@ function countOccurences(array){
             modeMap[el] = 1;
         }
         else{
-            modeMap[el]++;  
+            modeMap[el]++;
         }
     }
 
@@ -260,13 +267,13 @@ function extractExtensions(array){
 
     return extensionsArray;
 }
-    
+
 function constructStatistics(bug, id){
 
-    return '<ul class="statistiques" id="statistiques-'+id+'">' +                             
+    return '<ul class="statistiques" id="statistiques-'+id+'">' +
                 '<li>Reporter : ' + bug.reporter_name + '</li>' +
                 '<li>Assigned : ' + bug.assigned_to_name + '</li>' +
-                '<li>Report Date : ' +  bug.date + '</li>' + 
+                '<li>Report Date : ' +  bug.date + '</li>' +
                 '<li>Fixing Time : '+bug.fixing_time+'</li>'+
                 '<li>Severity : '+bug.bug_severity+'</li>'+
                 '<li>Sub-project : '+bug.sub_project+'</li>' +
@@ -365,8 +372,8 @@ function projectIcon(project){
 }
 
 function constructSaveMyDay(idBug, idRow, daySaved){
-    return '<i onclick="savedDay(\''+idBug+'\', \''+idRow+'\');"'+ 
-           'title="Already '+daySaved+' days saved"' +  
+    return '<i onclick="savedDay(\''+idBug+'\', \''+idRow+'\');"'+
+           'title="Already '+daySaved+' days saved"' +
            'class="fa fa-life-ring"><span class="nb-live-save">'+daySaved+'</span></i>';
 }
 
@@ -379,16 +386,16 @@ function fillBugsView(bugs){
         if(bug.live_saver === undefined){
             bug.live_saver = 0;
         }
-        
+
         var bug_result = '<div id="row-'+id+'" class="row row-bug">'+
-            '<div class="col-md-1 icons">'+                                
+            '<div class="col-md-1 icons">'+
                 constructSaveMyDay(bug.id, id, bug.live_saver) +
-                projectIcon(bug.id.split('_')[1]) + 
+                projectIcon(bug.id.split('_')[1]) +
                 languageIcon(mostCommonTerm(extractExtensions(bug.file))) +
             '</div>' +
-            '<div class="col-md-11">' + 
+            '<div class="col-md-11">' +
             '<h4 onclick="loadDetails(\''+bug.id+'\', \''+id+'\');">'+bug.title+'</h4>'+
-            constructDescription(bug.description, id) + 
+            constructDescription(bug.description, id) +
             constructStatistics(bug, id) +
             '</div></div>';
 
@@ -448,7 +455,7 @@ function ajaxRequest(){
                 $("#field").val()+
                 '%27) OR (type:"BUG" AND report_t:%27'+
                 $("#field").val()+
-                languageFilter + 
+                languageFilter +
                 datasetFilter +
                 '%27)&sort=live_saver+desc&start='+
                 startRow+
@@ -463,7 +470,7 @@ function ajaxRequest(){
             $(".error").hide();
         },
         success: function(res){
-            
+
             $body.removeClass("loading");
 
             fillBugsView(res.response.docs);
@@ -485,6 +492,11 @@ function ajaxRequest(){
 
 $(document).ready(function() {
 
+    $( ".searchbox" ).submit(function( event ) {
+
+        $(".landing").addClass("result");
+        event.preventDefault();
+    });
 
     $( "#search_form" ).submit(function( event ) {
 
@@ -508,6 +520,10 @@ $(document).ready(function() {
 
     });
 
+    $(".language-notification").text(languages.length);
+
+    console.log(languages);
+
     $.each($('.dataset-filter'), function( index, filter ) {
 
         $(filter).attr('onclick', 'datasetClick("' + $(filter).attr('data') +'")');
@@ -516,6 +532,8 @@ $(document).ready(function() {
         $("[data='"+$(filter).attr('data')+"']").addClass('actif');
 
     });
+
+    $(".dataset-notification").text(datasets.length);
 
     $("#field").val(baseSearch);
     $("#search_form").submit();

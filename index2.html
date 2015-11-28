@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>BUMPER. Bugs Metarepository for developers and researchers.</title>
-    
+
     <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
@@ -25,13 +25,15 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-    <link rel="stylesheet" href="https://cdn.rawgit.com/konpa/devicon/89f2f44ba07ea3fff7e561c2142813b278c2d6c6/devicon.min.css">    
+    <link rel="stylesheet" href="https://cdn.rawgit.com/konpa/devicon/89f2f44ba07ea3fff7e561c2142813b278c2d6c6/devicon.min.css">
 
-    <link href='https://fonts.googleapis.com/css?family=Nunito:400,700,300' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,100,100italic,300,300italic" rel="stylesheet" type="text/css">
 
     <link rel="stylesheet" href="css/font-mfizz/font-mfizz.css">
 
     <link rel="stylesheet" type="text/css" href="css2.css">
+    <link rel="stylesheet" type="text/css" href="css/searchbar.css">
+    <link rel="stylesheet" type="text/css" href="css/menu-notification.css">
 
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -39,15 +41,166 @@
 
 <body>
 
-<div id="wrapper">
+  <a href="https://github.com/bumper-app/bumper-website"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
+
+<div class="landing">
+
+  <h1 id="search-bar-header">
+    <span class="blue">b</span>
+    <span class="red">u</span>
+    <span class="yellow">m</span>
+    <span class="blue">p</span>
+    <span class="green">e</span>
+    <span class="red">r</span>
+  </h1>
+  <form class="searchbox" action="">
+     <input type="search" placeholder="Type your search" x-webkit-speech>
+     <ul class="suggestions">
+       <li><a onclick="suggestionClick('Null Pointer Exception in:java');">Null Pointer Exception in:java</a></li>
+       <li><a href="#">unresolved enum with bits info</a></li>
+       <li><a href="#">java.lang.AssertionError at org.netbeans.modules.cnd.modelimpl.parser in:netbeans</a></li>
+       <li><a href="#">protected RequestProcessor createRequestProcessor(Context ctx)</a></li>
+     </ul>
+ </form>
+
+ <nav class="navbar navbar-bumper">
+  <div class="container-fluid" style="margin-top:-16px">
+    <div>
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <span><span class="language-notification notification blue-notif"></span></span>
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Languages
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="language-filter" data="c"><i class="devicon-c-plain"></i> C </li>
+            <li class="language-filter" data="cpp"><i class="devicon-cplusplus-plain"></i> C++ </li>
+            <li class="language-filter" data="csharp"><i class="devicon-csharp-plain"></i> C# </li>
+            <li class="language-filter" data="erlang" href=""><i class="devicon-erlang-plain"></i> Erlang </li>
+            <li class="language-filter" data="js"><i class="devicon-javascript-plain"></i> JavaScript </li>
+            <li class="language-filter" data="java"><i class="devicon-java-plain"></i> Java </li>
+            <li class="language-filter" data="php"><i class="devicon-php-plain"></i> Php </li>
+            <li class="language-filter" data="py"><i class="devicon-python-plain"></i> Python </li>
+            <li class="language-filter" data="rb"><i class="devicon-ruby-plain"></i> Ruby </li>
+            <li class="language-filter" data="sh"><i class="icon-script"></i> Script / Bash </li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <span><span class="dataset-notification notification blue-notif"></span></span>
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Datasets
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="dataset-filter" data="Apache"><i class="devicon-apache-plain"></i> Apache SF</li>
+            <li class="dataset-filter" data="Netbeans">Netbeans</li>
+            <li><i class="icon-gnome"></i> Gnome <i>(soon)</i></li>
+            <li><i class="icon-kde"></i> Kde <i>(soon)</i></li>
+            <li><i class="devicon-firefox-plain"></i> Firefox <i>(soon)</i></li>
+            <li><i class="devicon-chrome-plain"></i> Chrome <i>(soon)</i></li>
+            <li>Eclipse <i>(soon)</i></li>
+            <li><i class="fa fa-github-alt"></i> From Github <i>(soon)</i></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Filters
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href=""><i class="fa fa-bug"></i> Bug </a></li>
+            <li><a href=""><i class="fa fa-code"></i> With fix  </a></li>
+            <li><a href=""><i class="fa fa-commenting-o"></i> With comments </a></li>
+            <li><a href=""><i class="fa fa-life-ring"></i> Save my day </a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Download
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li> XML </li>
+            <li> JSON </li>
+            <li> CSV </li>
+          </ul>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+<div class="row row-bumper">
+
+    <div id="list_results" class="col-md-6 content">
+
+        <h2 class="title bottom-border">Bug Reports</h2>
+
+        <div class="row">
+
+            <div class="col-md-1 icons">
+
+                <i class="fa fa-life-ring"></i>
+                <i class="devicon-apache-plain"></i>
+                <i class="devicon-java-plain"></i>
+            </div>
+            <div class="col-md-11">
+
+                <h4>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</h4>
+
+                <p id="description-1" class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec convallis turpis tempor enim molestie, vel dignissim ligula aliquam. Vestibulum sit amet cursus leo. Donec et aliquet magna, quis congue nisi. Quisque consectetur vel nulla eu gravida. Pellentesque non est sit amet quam malesuada tempus. Nam volutpat condimentum ullamcorper. <a href="#" id="more-1" onclick="toggleShortLongDescription('1');">more...</a> <span class="long-description" id="long-description-1">Integer congue volutpat quam nec pretium. Sed semper neque non laoreet aliquet. Donec tempor nunc non dolor molestie convallis. Nulla et nulla ipsum. Donec sit amet ante in nisi efficitur malesuada a quis quam.
+
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi odio nulla, pretium eu eleifend sit amet, molestie ac nunc. Morbi mattis, nisl a faucibus aliquet, nunc diam scelerisque felis, cursus congue nibh. <a href="#" onclick="toggleShortLongDescription('1');">less...</a></span></p>
+
+                <ul class="statistiques" id="statistiques-1">
+
+                    <li>Reporter : Mathieu</li>
+                    <li>Assigned : Charles</li>
+                    <li>Report Date : 1 june 2013</li>
+                    <li>Fixing Time : 2 days</li>
+                    <li>Severity : Major</li>
+                    <li>Sub-project : Major</li>
+                    <li>Files : Major</li>
+                    <li>Churns : 25</li>
+                    <li>Hunks : 25</li>
+
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="details-bug" class="col-md-6 content">
+
+        <div class="row">
+            <div id="fixes" class="col-md-12">
+
+                <h2 class="title bottom-border">Bug Fix</h2>
+
+            </div>
+        </div>
+        <div class="row">
+            <div id="comments" class="col-md-12">
+
+                <h2 class="title bottom-border">Comments</h2>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+</div>
+
+
+
+<div id="wrapper" style="display:none">
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
             <li class="sidebar-brand">
-                
+
                 <h1 class="center">
                     <span class="yellow">B</span>
                     <span class="red">U</span>
-                    <span class="purple">M
+                    <span class="purple">M</span>
                     <span class="blue">P</span>
                     <span class="yellow">E</span>
                     <span class="red">R</span>
@@ -59,8 +212,8 @@
                 <li class="language-filter" data="c"><i class="devicon-c-plain"></i> C </li>
                 <li class="language-filter" data="cpp"><i class="devicon-cplusplus-plain"></i> C++ </li>
                 <li class="language-filter" data="csharp"><i class="devicon-csharp-plain"></i> C# </li>
-                <li class="language-filter" data="erlang" href=""><i class="devicon-erlang-plain"></i> Erlang </a></li>
-                <li class="language-filter" data="js"><i class="devicon-javascript-plain"></i> JavaScript </a></li>
+                <li class="language-filter" data="erlang" href=""><i class="devicon-erlang-plain"></i> Erlang </li>
+                <li class="language-filter" data="js"><i class="devicon-javascript-plain"></i> JavaScript </li>
                 <li class="language-filter" data="java"><i class="devicon-java-plain"></i> Java </li>
                 <li class="language-filter" data="php"><i class="devicon-php-plain"></i> Php </li>
                 <li class="language-filter" data="py"><i class="devicon-python-plain"></i> Python </li>
@@ -77,7 +230,7 @@
                 <li><i class="icon-kde"></i> Kde <i>(soon)</i></li>
                 <li><i class="devicon-firefox-plain"></i> Firefox <i>(soon)</i></li>
                 <li><i class="devicon-chrome-plain"></i> Chrome <i>(soon)</i></li>
-                <li>Eclipse <i>(soon)</i></a></li>
+                <li>Eclipse <i>(soon)</i></li>
                 <li><i class="fa fa-github-alt"></i> From Github <i>(soon)</i></li>
 
             </ul>
@@ -91,7 +244,7 @@
             </ul>
 
             <p class="results">
-                <span id="result-count">554268</span> results 
+                <span id="result-count">554268</span> results
                 <span class="grey"><span id="time">0.3</span> sec</span>
             </p>
         </ul>
@@ -119,68 +272,55 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    
-                    <div id="list_results" class="col-md-6 content">
 
-                        <h2 class="title bottom-border">Bug Reports</h2>
 
-                        <div class="row">
-                            
-                            <div class="col-md-1 icons">
-                                
-                                <i class="fa fa-life-ring"></i>
-                                <i class="devicon-apache-plain"></i>
-                                <i class="devicon-java-plain"></i>
-                            </div>
-                            <div class="col-md-11">
-                                
-                                <h4>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</h4>
 
-                                <p id="description-1" class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec convallis turpis tempor enim molestie, vel dignissim ligula aliquam. Vestibulum sit amet cursus leo. Donec et aliquet magna, quis congue nisi. Quisque consectetur vel nulla eu gravida. Pellentesque non est sit amet quam malesuada tempus. Nam volutpat condimentum ullamcorper. <a href="#" id="more-1" onclick="toggleShortLongDescription('1');">more...</a> <span class="long-description" id="long-description-1">Integer congue volutpat quam nec pretium. Sed semper neque non laoreet aliquet. Donec tempor nunc non dolor molestie convallis. Nulla et nulla ipsum. Donec sit amet ante in nisi efficitur malesuada a quis quam.
 
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi odio nulla, pretium eu eleifend sit amet, molestie ac nunc. Morbi mattis, nisl a faucibus aliquet, nunc diam scelerisque felis, cursus congue nibh. <a href="#" onclick="toggleShortLongDescription('1');">less...</a></span></p> 
-                                
-                                <ul class="statistiques" id="statistiques-1">
-                                    
-                                    <li>Reporter : Mathieu</li>
-                                    <li>Assigned : Charles</li>
-                                    <li>Report Date : 1 june 2013</li>
-                                    <li>Fixing Time : 2 days</li>
-                                    <li>Severity : Major</li>
-                                    <li>Sub-project : Major</li>
-                                    <li>Files : Major</li>
-                                    <li>Churns : 25</li>
-                                    <li>Hunks : 25</li>
 
-                                </ul>
 
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="details-bug" class="col-md-6 content">
-
-                        <div class="row">
-                            <div id="fixes" class="col-md-12">
-
-                                <h2 class="title bottom-border">Bug Fix</h2>
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div id="comments" class="col-md-12">
-
-                                <h2 class="title bottom-border">Comments</h2>
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </div>
 
+<footer class="footer">
+  <div class="container">
+
+    <div class="col-md-12">
+      <div class="col-md-2 footer-link">
+          <p>
+            Showcase
+          </p>
+      </div>
+      <div  class="col-md-3 footer-link">
+          <a id="#query-mode" onclick="toogleQueryingMode();">
+            Advanced Query Mode
+          </a>
+      </div>
+        <div class="col-md-1 footer-link">
+            <p>
+              API
+            </p>
+        </div>
+        <div class="col-md-2 footer-link">
+            <p>
+              Datasets
+            </p>
+        </div>
+        <div class="col-md-2 ">
+            <p>
+              Publications
+            </p>
+        </div>
+        <div class="col-md-2 ">
+            <p>
+              About
+            </p>
+        </div>
+    </div>
+
+  </div>
+</footer>
+
 </body>
+</html>
