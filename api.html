@@ -1,16 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>BUMPER. Bugs Metarepository for developers and researchers.</title>
-	<link rel="stylesheet" type="text/css" href="css.css">
+	<title>BUMPER. Find Out How Other Fixed It</title>
+
 	<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet" type="text/css">
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	<link rel="icon" href="favicon.ico" type="image/x-icon">
-	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js" type="text/javascript"></script>
+
+	<script src="js/main.js" type="text/javascript"></script>
+
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<link rel="stylesheet" href="https://cdn.rawgit.com/konpa/devicon/89f2f44ba07ea3fff7e561c2142813b278c2d6c6/devicon.min.css">
+
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,100,100italic,300,300italic" rel="stylesheet" type="text/css">
+
+	<link rel="stylesheet" href="css/font-mfizz/font-mfizz.css">
+
+	<link rel="stylesheet" type="text/css" href="css/css.css">
 	<script type="text/javascript">
 
 		$(document).ready(function() {
@@ -21,30 +42,38 @@
 
 	</script>
 </head>
-<body>
+<body class="misc">
 
-<a href="https://github.com/bumper-app"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+	<div class="container">
 
-<div id="page_border">
+	<h1 style="text-align:center" id="search-bar-header"><span class="logo-bumper">
+			<span class="blue">b</span>
+			<span class="red">u</span>
+			<span class="yellow">m</span>
+			<span class="blue">p</span>
+			<span class="green">e</span>
+			<span class="red">r</span></span> <br />
+			Find Out How <u>Other</u> Fixed It
 
-	<div id="menu">
-		<a class="menu left" href="index.html">HOME</a>
-		<a class="menu left"  href="api.html">API</a>
-		<a class="menu left" href="showcase.html">SHOWCASE</a>
-		<a class="menu right" href="#"><span class="acro">Bu</span>g <span class="acro">M</span>etare<span class="acro">p</span>o for d<span class="acro">e</span>v &amp; <span class="acro">r</span>esearch</a>
-	</div>
+	</h1>
 
 	<div id="api_body">
 
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+
 	BUMPER supports two query modes: basic and advanced. This document explains how to use them and provide examples.
-		
+
 	<h3>Basic Query Mode</h3>
 
 	<p>The basic query mode allows you to search bug report, comments and source code according to search terms. Very much like any other search engines.
 	<br/>Try it out:
 
 	<ul>
-		
+
 		<li><a href="https://bumper-app.com/#!/query/Exception Java">https://bumper-app.com/#!/query/Exception Java</a></li>
 		<li><a href="https://bumper-app.com/#!/query/Java NPE">https://bumper-app.com/#!/query/Java NPE</a></li>
 		<li><a href="https://bumper-app.com/#!/query/bug_netbeans_168324">https://bumper-app.com/#!/query/bug_netbeans_168324</a></li>
@@ -106,7 +135,7 @@
 			<li>churns</li>
 
 		</ul>
-	
+
 	</ul>
 
 	Each bug can contain zero or many changeset. Similarly, each changeset can contain zero (i.e for merge commit) or many hunks.
@@ -133,7 +162,7 @@
 
 	<pre><code>fixing_time:[* TO 10]</code></pre>
 
-	, greater than, 
+	, greater than,
 
 	<pre><code>fixing_time:[10 TO *]</code></pre>
 
@@ -145,7 +174,7 @@
 
 	<h4>Super indexes</h4>
 
-	<p>BUMPER have two <i>super</i> indexes that allow you to search all the presented attributes at once. <i>report_t</i> indexes all 
+	<p>BUMPER have two <i>super</i> indexes that allow you to search all the presented attributes at once. <i>report_t</i> indexes all
 	the attributes of a bug report while <i>fix_t</i> indexes attributes of the changeset and hunks.</p>
 
 	<pre><code>report_t:"JAVA" AND fix_t:"EE"</code></pre>
@@ -154,7 +183,7 @@
 
 	<h4>Parent child relationship</h4>
 
-	The parent child relationship can be queried like any other attribute: 
+	The parent child relationship can be queried like any other attribute:
 
 	<pre><code class='javascript'>{!parent which="type:PARENT_TYPE"}type:"CHILD_TYPE"</code></pre>
 
@@ -173,8 +202,8 @@
 
 	<p>The basic query mode is powered by a rather complex query:</p>
 
-<pre><code class='javascript'>(type:"BUG" AND report_t:"TERMS" AND -churns:0) 
-OR ({!parent which="type:BUG"}{!parent which="type:CHANGESET"}type:"HUNKS" AND fix_t:"TERMS") 
+<pre><code class='javascript'>(type:"BUG" AND report_t:"TERMS" AND -churns:0)
+OR ({!parent which="type:BUG"}{!parent which="type:CHANGESET"}type:"HUNKS" AND fix_t:"TERMS")
 OR ({!parent which="type:BUG"}type:"CHANGESET" AND fix_t:"TERMS")</code></pre>
 
 	<p>Let's break it down:</p>
@@ -196,29 +225,61 @@ OR ({!parent which="type:BUG"}type:"CHANGESET" AND fix_t:"TERMS")</code></pre>
 	<p>If you want to use BUMPER as a data source, you might want to have a direct access to the data</p>
 
 	<pre><code class="javascript">https://bumper-app.com/solr/select?q=YOUR_ADVANCED_QUERY&start=0&fl=id,%20project,%20title&rows=1000&wt=YOUR_DATA_TYPE</code></pre>
-			
+
 	<p>You'll have to replace <b>YOUR_ADVANCED_QUERY</b> by a valid advanced query and <b>YOUR_DATA_TYPE</b> by xml (default), csv or json. Alternatively, you can download the whole dataset at <a href="https://bumper-app.com/bumper_dataset.zip">https://bumper-app.com/bumper_dataset.zip</a></p>
 
 	<h4>Direct Download Query Example</h4>
 
 	<ul>
-		
+
 		<li><a href="https://bumper-app.com/solr/select?q=(type%3ABUG+AND+report_t%3A(%22*%22))+OR+(%7B!parent+which%3D%22type%3ABUG%22%7Dfix_t%3A%22*%22)&start=0&fl=id,%20project,%20title&rows=1000&wt=json&json.wrf">https://bumper-app.com/solr/select?q=(type%3ABUG+AND+report_t%3A(%22*%22))+OR+(%7B!parent+which%3D%22type%3ABUG%22%7Dfix_t%3A%22*%22)&start=0&fl=id,%20project,%20title&rows=1000&wt=json&json.wrf</a></li>
 	</ul>
 
 	</div>
 
-
-
-	<div id="footer">
-		<div id="footer_left">
-			Made with <i style="color:#CC0F0F!important" class="fa fa-heart"></i> by <a href="http://mathieu-nayrolles.com">Mathieu Nayrolles</a> member of the <a href="http://users.encs.concordia.ca/~abdelw/sba/">Software Behaviour Analysis (SBA)</a> Research Lab <br />
-			<a href="https://www.concordia.ca/">Concordia University</a>, Montr&eacute;al, Qu&eacute;bec, Canada.
-		</div>
-		<div id="footer_right">
-			If you want to learn more about <a href="http://lucene.apache.org/solr/">Apache Solr</a>, the full-text search engine powering BUMPER, make sure to get yourself a copy of <a href="http://www.amazon.com/Mastering-Apache-Solr-practical-guide/dp/8192784509/ref=sr_1_1?ie=UTF8&qid=1400238519&sr=8-1&keywords=mastering+inkstall" title="Mastering Apache Solr">Mastering Apache Solr</a>. You can download the full dataset <a href="https://bumper-app.com/bumper_dataset.zip">here</a>.
-		</div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 	</div>
+	<footer class="footer">
+	  <div class="container">
 
+	    <div class="col-md-12">
+	      <div class="col-md-2 footer-link">
+	          <p>
+	            <a href="showcase.html">Showcase</a>
+	          </p>
+	      </div>
+	      <div  class="col-md-3 footer-link">
+	          <a id="query-mode" onclick="toogleQueryingMode();">
+	            Advanced Query Mode
+	          </a>
+	      </div>
+	        <div class="col-md-1 footer-link">
+	            <p>
+	              <a href="api.html">API</a>
+	            </p>
+	        </div>
+	        <div class="col-md-2 footer-link">
+	            <p>
+	              <a href="datasets.html">Datasets</a>
+	            </p>
+	        </div>
+	        <div class="col-md-2 ">
+	            <p>
+	              <a href="publications.html">Publications</a>
+	            </p>
+	        </div>
+	        <div class="col-md-2 ">
+	            <p>
+	              <a href="about.html">About</a>
+	            </p>
+	        </div>
+	    </div>
+
+	  </div>
+	</footer>
 </body>
 </html>

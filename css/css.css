@@ -10,7 +10,11 @@ html, body
     overflow: hidden;
 }
 
-.landing > #search-bar-header{
+.misc{
+  overflow-y: scroll;
+}
+
+#search-bar-header{
 
   padding-top: 4%;
   font-family: 'Roboto';

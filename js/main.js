@@ -54,9 +54,8 @@ if(window.location.hash) {
 
     if(hash.startsWith("!/query/")){
         baseSearch = hash.replace("!/query/", "");
-    }else if(hash.startsWith("!/advanced/")){
-        toogleQueryingMode();
-        baseSearch = hash.replace("!/advanced/", "");
+        $("#field").val(baseSearch);
+        $( ".searchbox" ).submit();
     }
 }
 
