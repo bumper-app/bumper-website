@@ -470,7 +470,7 @@ function ajaxRequest(){
       $( document ).height()
       - $(".searchbox").height() - 30
       - $("nav").height() - 30
-      - $("footer").height() - 30
+      - $("footer").height() - 50
     );
 
     query = $("#field").val();
