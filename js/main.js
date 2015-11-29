@@ -573,4 +573,6 @@ $(document).ready(function() {
     $(".dataset-notification").text(datasets.length);
 
     $("#field").val(baseSearch);
+
+    $("#search-bar-header").attr('onclick', "location.href='https://bumper-app.com';");
 });
