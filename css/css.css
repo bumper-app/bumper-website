@@ -5,7 +5,7 @@ html, body
     font-family: 'Roboto', sans-serif;
     height: 100%;
     font-weight: 300;
-    background: url(img/logo-bg.png) no-repeat;
+    background: url(../img/logo-bg.png) no-repeat;
     background-position: 50% 65%;
     overflow: hidden;
 }
@@ -213,7 +213,7 @@ i.persicon-netbeans{
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url('img/plainicon.com-50290-32px-fdd.png');
+  background-image: url('../img/plainicon.com-50290-32px-fdd.png');
   background-position: center center;
   background-size: cover;
   height: 30px;

@@ -3,9 +3,17 @@
 
   width: 80%;
   margin: auto;
-  padding-top: 20px;
+  padding-top: 50px;
 
   /*centering the form element*/
+}
+
+.result .searchbox{
+  padding-top: 20px;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease;
 }
 
 ::-webkit-input-placeholder { font-family:'Roboto'; font-weight: 100; color:#DADFE1; }
