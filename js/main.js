@@ -36,13 +36,12 @@ function suggestionClick(suggestion){
 function toogleQueryingMode(){
 
     if(!advanced){
-        //$("#field").val('({!join from=parent_bug to=id}fix_t:"'+$("#field").val()+'") OR (type:"BUG" AND report_t:"'+$("#field").val()+'")');
-
+        $("#field").val('({!join from=parent_bug to=id}fix_t:"'+$("#field").val()+'") OR (type:"BUG" AND report_t:"'+$("#field").val()+'")');
         $("#query-mode").text("Basic query mode");
 
     }else{
         $("#query-mode").text("Advanced query mode");
-        //$("#field").val("");
+        $("#field").val("");
     }
 
     advanced = !advanced;
@@ -445,6 +444,24 @@ function pagination(nb){
   $("#list_results").append(pagination);
 }
 
+function setDirectDownload(){
+  $("#download_button a").each(function(index, value) {
+		$(this).attr("href",
+    'https://bumper-app.com/api/select?q=' + (
+      (advanced) ? query+'&sort=live_saver+desc&wt='+$(this).attr("id")
+        : '({!join from=parent_bug to=id}fix_t:%27'+
+            query+
+            '%27) OR (type:"BUG" AND report_t:%27'+
+            query+
+            languageFilter +
+            datasetFilter +
+            '%27)&sort=live_saver+desc'+
+            '&wt='+$(this).attr("id")
+          )
+			);
+	});
+}
+
 function ajaxRequest(){
 
     languageFilter = '';
@@ -505,6 +522,8 @@ function ajaxRequest(){
             ajaxComments(res.response.docs[0].id);
             ajaxFix(res.response.docs[0].id);
             $( ".row-bug:first").addClass("actif");
+
+            setDirectDownload();
 
             $("#result-count").html(res.response.numFound);
             $("#time").html(res.responseHeader.QTime / 100);

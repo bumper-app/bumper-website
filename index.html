@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>BUMPER. Bugs Metarepository for developers and researchers.</title>
+    <title>BUMPER. Find Out How Other Fixed It</title>
 
     <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js" type="text/javascript"></script>
 
@@ -120,10 +120,10 @@
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Download
           <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li> XML </li>
-            <li> JSON </li>
-            <li> CSV </li>
+          <ul id="download_button" class="dropdown-menu">
+            <li> <a target="_blank" id="xml" href="#">XML</a> </li>
+            <li> <a target="_blank" id="json" href="#">JSON</a> </li>
+            <li> <a target="_blank" id="csv" href="#">CSV</a> </li>
           </ul>
         </li>
       </ul>
@@ -208,7 +208,7 @@
           </p>
       </div>
       <div  class="col-md-3 footer-link">
-          <a id="#query-mode" onclick="toogleQueryingMode();">
+          <a id="query-mode" onclick="toogleQueryingMode();">
             Advanced Query Mode
           </a>
       </div>
