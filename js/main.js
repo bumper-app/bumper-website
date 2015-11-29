@@ -347,9 +347,9 @@ function loadDetails(bug_id, rowId){
 
 function constructSaveMyDay(idBug, idRow, daySaved){
 
-  return '<i onclick="savedDay(\''+idBug+'\', \''+idRow+'\', \'up\');" class="fa fa-sort-asc"></i>' +
+  return '<i onclick="upvote(\''+idBug+'\', \''+idRow+'\');" class="fa fa-sort-asc"></i>' +
   '<div class="count-ups">'+daySaved+'</div>' +
-  '<i onclick="savedDay(\''+idBug+'\', \''+idRow+'\', \'down\');" class="fa fa-sort-desc"></i>';
+  '<i onclick="downvote(\''+idBug+'\', \''+idRow+'\');" class="fa fa-sort-desc"></i>';
 }
 
 function constructSourceUrl(project, id){
@@ -401,24 +401,42 @@ function fillBugsView(bugs){
     });
 }
 
-function savedDay(id, rowId){
-    console.log(id);
-    console.log(rowId);
+function upvote(id, rowId){
+  if(!$("#row-"+rowId+" > .icons > i.fa-sort-asc").hasClass("actif")){
+    $("#row-"+rowId+" > .icons > i.fa-sort-asc").addClass("actif");
+    $("#row-"+rowId+" > .icons > i.fa-sort-desc").removeClass("actif");
+    $("#row-"+rowId+" > .icons > div.count-ups").text(
+        parseInt($("#row-"+rowId+" > .icons > div.count-ups").text()) + 1);
+
+    vote(id, "up");
+  }
+}
+
+function downvote(id, rowId){
+  if(!$("#row-"+rowId+" > .icons > i.fa-sort-desc").hasClass("actif")){
+    $("#row-"+rowId+" > .icons > i.fa-sort-asc").removeClass("actif");
+    $("#row-"+rowId+" > .icons > i.fa-sort-desc").addClass("actif");
+    $("#row-"+rowId+" > .icons > div.count-ups").text(
+        parseInt($("#row-"+rowId+" > .icons > div.count-ups").text()) - 1);
+
+    vote(id, "down");
+  }
+}
+
+function vote(id, up){
+
+    var url = 'https://bumper-app.com/life-saver/'+id;
+
+    if(up === "down"){
+        url = 'https://bumper-app.com/life-unsaver/'+id;
+    }
+
     $.ajax({
-        url: 'https://bumper-app.com/life-saver/'+id,
+        url: url,
         dataType: 'json',
         processData: false,
         type: 'GET',
-        timeout : 5000,
-        success: function(res){
-
-            console.log($("#row-"+rowId+" > .icons > i.fa-life-ring > span.nb-live-save").text());
-
-            $("#row-"+rowId+" > .icons > i.fa-life-ring").addClass("actif");
-            $("#row-"+rowId+" > .icons > i.fa-life-ring > span.nb-live-save").text(
-                parseInt($("#row-"+rowId+" > .icons > i.fa-life-ring > span.nb-live-save").text()) + 1);
-            $("#row-"+rowId+" > .icons > i.fa-life-ring").attr('onclick', '').click('');
-        }
+        timeout : 5000
     });
 }
 
