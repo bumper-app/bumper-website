@@ -108,7 +108,7 @@ input[type="search"]:-ms-input-placeholder {
 }
 /*now first we will hide the suggestion list*/
 
-.suggestions li {
+.suggestions li, .suggestions h4 {
   overflow: hidden;
   height: 0;
   -webkit-transition: all 0.3s ease-in-out;
@@ -118,9 +118,16 @@ input[type="search"]:-ms-input-placeholder {
 }
 /*and make the suggestion reappear when user focus on search field*/
 
-input[type="search"]:focus + .suggestions li {
+input[type="search"]:focus + .suggestions li{
   height: 63px;
 }
+
+
+input[type="search"]:focus + .suggestions h4{
+  margin-top: 40px;
+  height: 20px;
+}
+
 
 .result .suggestions {
   display: none;
