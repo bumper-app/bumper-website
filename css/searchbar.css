@@ -28,6 +28,7 @@ input[type="search"] {
   font-size: 36px;
   width: 100%;
   color: #91938F;
+  background:transparent;
   /*removing boder from search box*/
 
   border: none;
