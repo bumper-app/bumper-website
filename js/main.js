@@ -355,7 +355,7 @@ function constructSourceUrl(project, id){
        case 'netbeans':
            return 'https://netbeans.org/bugzilla/show_bug.cgi?id='+id;
        case 'Apache':
-           return 'https://netbeans.org/bugzilla/show_bug.cgi?id='+id;
+           return 'https://issues.apache.org/jira/browse/'+id;
        default :
            return 'https://netbeans.org/bugzilla/show_bug.cgi?id='+id;
    }
