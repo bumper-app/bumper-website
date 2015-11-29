@@ -6,7 +6,7 @@ String.prototype.startsWith = function (str) {
     return this.indexOf(str) === 0;
 };
 
-Array.prototype.remove = function() {
+Array.prototype.remove = function () {
     var what, a = arguments, L = a.length, ax;
     while (L && this.length) {
         what = a[--L];
@@ -104,7 +104,8 @@ function datasetClick(dataset){
 function paginate(){
     startRow = endRow;
     endRow = endRow + 100;
-    $( ".searchbox" ).submit();
+    $( ".pagination-row" ).remove();
+    ajaxRequest();
 }
 
 function constructComments(bug){
