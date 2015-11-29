@@ -11,19 +11,23 @@ html, body
 
 .landing > #search-bar-header{
 
-  padding-top: 8%;
+  padding-top: 4%;
   font-family: 'Roboto';
-  font-weight: 500;
+  font-weight: 300;
   width: 100%;
-  padding-left: 10%;
   text-align: left;
-  letter-spacing: -8px;
   font-size: 55px;
+  text-align: center;
 }
 
-.result #search-bar-header{
+.logo-bumper{
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.result #search-bar-header, .result #search-bar-header span{
   opacity: 0;
-  height: 0px;
+  height: 0px !important;
   padding-top: 0%;
   -webkit-transition: all 1s ease;
   -moz-transition: all 1s ease;
@@ -49,6 +53,11 @@ html, body
   margin-right: auto;
   margin-top:20px;
   text-align: left;
+  opacity: 0;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease;
 }
 
 .navbar-bumper{
@@ -107,6 +116,10 @@ html, body
     color:#0266C8;
 }
 
+.dark-blue{
+  color:#5A549C;
+}
+
 .green{
   color:#00933B;
 }
@@ -146,8 +159,18 @@ nav a{
 
 .icons i{
   float: left;
-  font-size: 30px;
-  margin-top: 15px;
+  font-size: 40px;
+  margin-top: 10px;
+  margin-bottom: 10;
+  color:#6b757d;
+  cursor: pointer;
+}
+
+.icons .count-ups{
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
 }
 
 p.description{
@@ -232,4 +255,41 @@ li.language-filter, li.dataset-filter{
 
 li.language-filter.actif, li.dataset-filter.actif{
   color:#353A3F;
+}
+
+.col-md-11 > h4{
+  margin-bottom: 0px;
+  text-align: left;
+}
+
+.source-link{
+  color:#006621;
+}
+
+.keywords{
+  font-style:italic;
+  font-weight: bold;
+  float: right;
+}
+
+#fixes{
+  padding-left: 50px;
+}
+
+.statistiques-search{
+  display: none;
+  padding-left: 10px;
+  padding-top: 5px;
+  text-align: left;
+  color: #808080;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.result .statistiques-search{
+  display: block;
+}
+
+.pagination-row {
+    text-align: center;
 }

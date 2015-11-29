@@ -45,22 +45,27 @@
 
 <div class="landing">
 
-  <h1 id="search-bar-header">
-    <span class="blue">b</span>
-    <span class="red">u</span>
-    <span class="yellow">m</span>
-    <span class="blue">p</span>
-    <span class="green">e</span>
-    <span class="red">r</span>
+  <h1 id="search-bar-header"><span class="logo-bumper">
+      <span class="blue">b</span>
+      <span class="red">u</span>
+      <span class="yellow">m</span>
+      <span class="blue">p</span>
+      <span class="green">e</span>
+      <span class="red">r</span></span> <br />
+      Find Out How <u>Other</u> Fixed It
+
   </h1>
   <form class="searchbox" action="">
-     <input type="search" placeholder="Type your search" x-webkit-speech>
+     <input id="field" type="search" placeholder="Type your search" x-webkit-speech>
      <ul class="suggestions">
-       <li><a onclick="suggestionClick('Null Pointer Exception in:java');">Null Pointer Exception in:java</a></li>
-       <li><a href="#">unresolved enum with bits info</a></li>
-       <li><a href="#">java.lang.AssertionError at org.netbeans.modules.cnd.modelimpl.parser in:netbeans</a></li>
-       <li><a href="#">protected RequestProcessor createRequestProcessor(Context ctx)</a></li>
+       <li><a onclick="suggestionClick('Null Pointer Exception');">Null Pointer Exception</a></li>
+       <li><a onclick="suggestionClick('Unresolved enum with bits info');">unresolved enum with bits info</a></li>
+       <li><a onclick="suggestionClick('java.lang.AssertionError at org.netbeans.modules.cnd.modelimpl.parser dataset:netbeans');">java.lang.AssertionError at org.netbeans.modules.cnd.modelimpl.parser</a></li>
+       <li><a onclick="suggestionClick('protected RequestProcessor createRequestProcessor(Context ctx)');">protected RequestProcessor createRequestProcessor(Context ctx)</a></li>
      </ul>
+     <p class="statistiques-search">
+        About <span id="result-count"></span> results (<span id="time"></span> seconds)
+     </p>
  </form>
 
  <nav class="navbar navbar-bumper">
@@ -91,11 +96,11 @@
           <ul class="dropdown-menu">
             <li class="dataset-filter" data="Apache"><i class="devicon-apache-plain"></i> Apache SF</li>
             <li class="dataset-filter" data="Netbeans">Netbeans</li>
-            <li><i class="icon-gnome"></i> Gnome <i>(soon)</i></li>
+            <li class="dataset-filter"><i class="icon-gnome"></i> Gnome</li>
+            <li class="dataset-filter">Eclipse <i>(soon)</i></li>
             <li><i class="icon-kde"></i> Kde <i>(soon)</i></li>
             <li><i class="devicon-firefox-plain"></i> Firefox <i>(soon)</i></li>
             <li><i class="devicon-chrome-plain"></i> Chrome <i>(soon)</i></li>
-            <li>Eclipse <i>(soon)</i></li>
             <li><i class="fa fa-github-alt"></i> From Github <i>(soon)</i></li>
           </ul>
         </li>
@@ -131,21 +136,27 @@
 
     <div id="list_results" class="col-md-6 content">
 
-        <h2 class="title bottom-border">Bug Reports</h2>
-
-        <div class="row">
+        <!-- Example of a generated bug dom<div class="row">
 
             <div class="col-md-1 icons">
 
-                <i class="fa fa-life-ring"></i>
-                <i class="devicon-apache-plain"></i>
-                <i class="devicon-java-plain"></i>
+                <i class="fa fa-sort-asc"></i>
+                <div class="count-ups">30</div>
+                <i class="fa fa-sort-desc"></i>
+
+
             </div>
             <div class="col-md-11">
 
-                <h4>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</h4>
+                <h4 class="dark-blue">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</h4>
 
-                <p id="description-1" class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec convallis turpis tempor enim molestie, vel dignissim ligula aliquam. Vestibulum sit amet cursus leo. Donec et aliquet magna, quis congue nisi. Quisque consectetur vel nulla eu gravida. Pellentesque non est sit amet quam malesuada tempus. Nam volutpat condimentum ullamcorper. <a href="#" id="more-1" onclick="toggleShortLongDescription('1');">more...</a> <span class="long-description" id="long-description-1">Integer congue volutpat quam nec pretium. Sed semper neque non laoreet aliquet. Donec tempor nunc non dolor molestie convallis. Nulla et nulla ipsum. Donec sit amet ante in nisi efficitur malesuada a quis quam.
+                <p>
+                  <a class="source-link" href="https://awkldlawdnaklnd">https://awkldlawdnaklnd</a>
+                  <span class="keywords">Java, Apache</span>
+                </p>
+
+
+                <p id="description-1" class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec convallis turpis tempor enim molestie, vel dignissim ligula aliquam. Vestibulum sit amet cursus leo. Donec et aliquet . <a href="#" id="more-1" onclick="toggleShortLongDescription('1');">more...</a> <span class="long-description" id="long-description-1">Integer congue volutpat quam nec pretium. Sed semper neque non laoreet aliquet. Donec tempor nunc non dolor molestie convallis. Nulla et nulla ipsum. Donec sit amet ante in nisi efficitur malesuada a quis quam.
 
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi odio nulla, pretium eu eleifend sit amet, molestie ac nunc. Morbi mattis, nisl a faucibus aliquet, nunc diam scelerisque felis, cursus congue nibh. <a href="#" onclick="toggleShortLongDescription('1');">less...</a></span></p>
 
@@ -164,7 +175,8 @@
                 </ul>
 
             </div>
-        </div>
+        </div> -->
+
     </div>
 
     <div id="details-bug" class="col-md-6 content">
@@ -172,15 +184,11 @@
         <div class="row">
             <div id="fixes" class="col-md-12">
 
-                <h2 class="title bottom-border">Bug Fix</h2>
-
             </div>
         </div>
         <div class="row">
             <div id="comments" class="col-md-12">
 
-                <h2 class="title bottom-border">Comments</h2>
-
             </div>
         </div>
 
@@ -188,99 +196,6 @@
 </div>
 
 
-</div>
-
-
-
-<div id="wrapper" style="display:none">
-    <div id="sidebar-wrapper">
-        <ul class="sidebar-nav">
-            <li class="sidebar-brand">
-
-                <h1 class="center">
-                    <span class="yellow">B</span>
-                    <span class="red">U</span>
-                    <span class="purple">M</span>
-                    <span class="blue">P</span>
-                    <span class="yellow">E</span>
-                    <span class="red">R</span>
-                </h1>
-            </li>
-
-            <ul>
-                <h2>Programming Languages</h2>
-                <li class="language-filter" data="c"><i class="devicon-c-plain"></i> C </li>
-                <li class="language-filter" data="cpp"><i class="devicon-cplusplus-plain"></i> C++ </li>
-                <li class="language-filter" data="csharp"><i class="devicon-csharp-plain"></i> C# </li>
-                <li class="language-filter" data="erlang" href=""><i class="devicon-erlang-plain"></i> Erlang </li>
-                <li class="language-filter" data="js"><i class="devicon-javascript-plain"></i> JavaScript </li>
-                <li class="language-filter" data="java"><i class="devicon-java-plain"></i> Java </li>
-                <li class="language-filter" data="php"><i class="devicon-php-plain"></i> Php </li>
-                <li class="language-filter" data="py"><i class="devicon-python-plain"></i> Python </li>
-                <li class="language-filter" data="rb"><i class="devicon-ruby-plain"></i> Ruby </li>
-                <li class="language-filter" data="sh"><i class="icon-script"></i> Script / Bash </li>
-
-            </ul>
-
-            <ul>
-                <h2>Projects</h2>
-                <li class="dataset-filter" data="Apache"><i class="devicon-apache-plain"></i> Apache SF</li>
-                <li class="dataset-filter" data="Netbeans">Netbeans</li>
-                <li><i class="icon-gnome"></i> Gnome <i>(soon)</i></li>
-                <li><i class="icon-kde"></i> Kde <i>(soon)</i></li>
-                <li><i class="devicon-firefox-plain"></i> Firefox <i>(soon)</i></li>
-                <li><i class="devicon-chrome-plain"></i> Chrome <i>(soon)</i></li>
-                <li>Eclipse <i>(soon)</i></li>
-                <li><i class="fa fa-github-alt"></i> From Github <i>(soon)</i></li>
-
-            </ul>
-
-            <ul>
-                <h2>Filters</h2>
-                <li><a href=""><i class="fa fa-bug"></i> Bug </a></li>
-                <li><a href=""><i class="fa fa-code"></i> With fix  </a></li>
-                <li><a href=""><i class="fa fa-commenting-o"></i> With comments </a></li>
-                <li><a href=""><i class="fa fa-life-ring"></i> Save my day </a></li>
-            </ul>
-
-            <p class="results">
-                <span id="result-count">554268</span> results
-                <span class="grey"><span id="time">0.3</span> sec</span>
-            </p>
-        </ul>
-    </div>
-    <div id="page-content-wrapper">
-        <div class="page-content">
-            <div class="container-fluid">
-                <div id="header" class="row bottom-border">
-                    <div class="col-md-12">
-                        <div class="col-md-6 search-box">
-                            <i class="fa fa-search grey"></i>
-                            <form id="search_form">
-                                <input id="field" name="field" type="text" />
-                            </form>
-                        </div>
-                        <div class="col-md-5 menu grey">
-                            <ul>
-                                <li><a href="">API</a></li>
-                                <li><a href="">Publications</a></li>
-                                <li><a href="">Showcase</a></li>
-                                <li><a href="">ABOUT</a></li>
-                            </ul>
-                        </div>
-                        <div class="logo"></div>
-                    </div>
-                </div>
-
-
-
-
-
-
-
-            </div>
-        </div>
-    </div>
 </div>
 
 <footer class="footer">

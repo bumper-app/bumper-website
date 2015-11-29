@@ -73,6 +73,8 @@ function languageClick(language){
 
     }
 
+    $(".language-notification").text(languages.length);
+
     $( "#fixes > .row" ).remove();
     $( "#comments > .row" ).remove();
     $( "#list_results > .row" ).remove();
@@ -90,6 +92,8 @@ function datasetClick(dataset){
         $("[data='"+dataset+"']").addClass('actif');
     }
 
+    $(".dataset-notification").text(datasets.length);
+
     $( "#fixes > .row" ).remove();
     $( "#comments > .row" ).remove();
     $( "#list_results > .row" ).remove();
@@ -100,7 +104,7 @@ function datasetClick(dataset){
 function paginate(){
     startRow = endRow;
     endRow = endRow + 100;
-    $("#submit").click();
+    $( ".searchbox" ).submit();
 }
 
 function constructComments(bug){
@@ -290,9 +294,9 @@ function constructDescription(description, id){
             ' more...</a> <span class="long-description" id="long-description-'+id+'">';
     var lessTag = '<a onclick="toggleShortLongDescription(\''+id+'\');"> less...</a></span></p>';
 
-    if(description.length > 340){
+    if(description.length > 180){
 
-        description = head + description.splice(340, 0, moreTag) + lessTag;
+        description = head + description.splice(180, 0, moreTag) + lessTag;
     }else{
         description = head + description + moreTag + lessTag;
     }
@@ -340,41 +344,35 @@ function loadDetails(bug_id, rowId){
     $( "#row-"+rowId).addClass("actif");
 }
 
-function languageIcon(languageExtension){
-    switch(languageExtension) {
-        case 'rb':
-            return '<i title="ruby" class="devicon-ruby-plain"></i>';
-        case 'js':
-            return '<i title="javascript" class="devicon-javascript-plain"></i>';
-        case 'py':
-            return '<i title="pyton" class="devicon-python-plain"></i>';
-        case 'java':
-            return '<i title="java" class="devicon-java-plain"></i>';
-        case 'php':
-            return '<i title="php" class="devicon-php-plain"></i>';
-        case 'cpp':
-        case 'cc':
-            return '<i title="c++" class="devicon-cplusplus-plain"></i>';
-        default:
-            return '<i title="'+languageExtension+'" class="fa fa-code"></i>';
-    }
-}
-
-function projectIcon(project){
-    switch(project) {
-        case 'netbeans':
-            return '<i title="netbeans" class="persicon-netbeans"></i>';
-        case 'Apache':
-            return '<i title="Apache Software Foundation" class="devicon-apache-plain"></i>';
-        default :
-            return '<i title="'+project+'" class="fa fa-code"></i>';
-    }
-}
-
 function constructSaveMyDay(idBug, idRow, daySaved){
-    return '<i onclick="savedDay(\''+idBug+'\', \''+idRow+'\');"'+
-           'title="Already '+daySaved+' days saved"' +
-           'class="fa fa-life-ring"><span class="nb-live-save">'+daySaved+'</span></i>';
+
+  return '<i onclick="savedDay(\''+idBug+'\', \''+idRow+'\', \'up\');" class="fa fa-sort-asc"></i>' +
+  '<div class="count-ups">'+daySaved+'</div>' +
+  '<i onclick="savedDay(\''+idBug+'\', \''+idRow+'\', \'down\');" class="fa fa-sort-desc"></i>';
+}
+
+function constructSourceUrl(project, id){
+  switch(project) {
+       case 'netbeans':
+           return 'https://netbeans.org/bugzilla/show_bug.cgi?id='+id;
+       case 'Apache':
+           return 'https://netbeans.org/bugzilla/show_bug.cgi?id='+id;
+       default :
+           return 'https://netbeans.org/bugzilla/show_bug.cgi?id='+id;
+   }
+
+}
+
+function constructSubHeader(bug){
+
+  sourceUrl = constructSourceUrl(bug.id.split('_')[1], bug.id.split('_')[2]);
+
+  return '<p>' +
+    '<a class="source-link" href="'+sourceUrl+'">'+sourceUrl+'</a>' +
+    '<span class="keywords">'+mostCommonTerm(extractExtensions(bug.file))+
+    ', '+bug.id.split('_')[1]+', '+bug.project+'</span>'+
+  '</p>';
+
 }
 
 function fillBugsView(bugs){
@@ -390,11 +388,10 @@ function fillBugsView(bugs){
         var bug_result = '<div id="row-'+id+'" class="row row-bug">'+
             '<div class="col-md-1 icons">'+
                 constructSaveMyDay(bug.id, id, bug.live_saver) +
-                projectIcon(bug.id.split('_')[1]) +
-                languageIcon(mostCommonTerm(extractExtensions(bug.file))) +
             '</div>' +
             '<div class="col-md-11">' +
-            '<h4 onclick="loadDetails(\''+bug.id+'\', \''+id+'\');">'+bug.title+'</h4>'+
+            '<h4 class="dark-blue" onclick="loadDetails(\''+bug.id+'\', \''+id+'\');">'+bug.title+'</h4>'+
+            constructSubHeader(bug) +
             constructDescription(bug.description, id) +
             constructStatistics(bug, id) +
             '</div></div>';
@@ -424,10 +421,24 @@ function savedDay(id, rowId){
     });
 }
 
+function pagination(nb){
+  var pagination = "<div class='pagination-row row'><a onclick='paginate();'>More ...</a></div>";
+  $("#list_results").append(pagination);
+}
+
 function ajaxRequest(){
 
     languageFilter = '';
     datasetFilter = '';
+
+    $("#list_results, #details-bug").css("height",
+      $( document ).height()
+      - $(".searchbox").height() - 30
+      - $("nav").height() - 30
+      - $("footer").height() - 30
+    );
+
+    query = $("#field").val();
 
     if(languages.length != $("li.language-filter").length){
 
@@ -450,11 +461,11 @@ function ajaxRequest(){
     }
 
     $.ajax({
-        url: 'https://bumper-app.com/api/select?q=' + ((advanced) ? $("#field").val()+'&sort=live_saver+desc&start='+startRow+'&rows='+endRow+'&wt=json'
+        url: 'https://bumper-app.com/api/select?q=' + ((advanced) ? query+'&sort=live_saver+desc&start='+startRow+'&rows='+endRow+'&wt=json'
             : '({!join from=parent_bug to=id}fix_t:%27'+
-                $("#field").val()+
+                query+
                 '%27) OR (type:"BUG" AND report_t:%27'+
-                $("#field").val()+
+                query+
                 languageFilter +
                 datasetFilter +
                 '%27)&sort=live_saver+desc&start='+
@@ -465,15 +476,12 @@ function ajaxRequest(){
         dataType: 'jsonp',
         timeout : 5000,
         jsonp: 'json.wrf',
-        beforeSend: function( xhr ) {
-            $body.addClass("loading");
-            $(".error").hide();
-        },
         success: function(res){
 
             $body.removeClass("loading");
 
             fillBugsView(res.response.docs);
+            pagination(res.response.numFound);
 
             ajaxComments(res.response.docs[0].id);
             ajaxFix(res.response.docs[0].id);
@@ -483,8 +491,7 @@ function ajaxRequest(){
             $("#time").html(res.responseHeader.QTime / 100);
         },
         error: function (xhr, errorType, exception) {
-            $(".error").show();
-            $body.removeClass("loading");
+            alert("Something went wrong");
         },
     });
 }
@@ -495,21 +502,16 @@ $(document).ready(function() {
     $( ".searchbox" ).submit(function( event ) {
 
         $(".landing").addClass("result");
-        event.preventDefault();
-    });
-
-    $( "#search_form" ).submit(function( event ) {
+        $(".row-bumper").css("opacity", 1);
 
         $( "#fixes > .row" ).remove();
         $( "#comments > .row" ).remove();
         $( "#list_results > .row" ).remove();
 
         ajaxRequest();
-
         event.preventDefault();
-    });
 
-    $("#list_results, #details-bug").css("height", $( document ).height() - $("#header").height());
+    });
 
     $.each($('.language-filter'), function( index, filter ) {
 
@@ -521,8 +523,6 @@ $(document).ready(function() {
     });
 
     $(".language-notification").text(languages.length);
-
-    console.log(languages);
 
     $.each($('.dataset-filter'), function( index, filter ) {
 
@@ -536,5 +536,4 @@ $(document).ready(function() {
     $(".dataset-notification").text(datasets.length);
 
     $("#field").val(baseSearch);
-    $("#search_form").submit();
 });
