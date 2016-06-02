@@ -31,3 +31,13 @@ node_modules
 
 # Optional REPL history
 .node_repl_history
+
+# Ignore Node & Bower
+###################
+app/**/*.map
+app/**/*.js
+
+# Ignore Test reporters
+###################
+**/test/coverage
+report

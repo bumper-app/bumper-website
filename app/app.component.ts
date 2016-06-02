@@ -1,14 +1,21 @@
-import { Component } from '@angular/core';
-import { Report } from './report';
-
-
-
-
+import { Component, OnInit } from '@angular/core';
+import { ReportService } from './report.service';
+import { ReportComponent } from './report.component';
 
 @Component({
-  selector: 'my-app',
-  template: '<h1>My Second Angular   2 App</h1>'
+	moduleId: module.id,
+	selector: 'my-app',
+	 template: `
+      <h1>{{title}}</h1>
+      <reports></reports>
+    `,
+	directives: [ReportComponent],
+	providers: [ReportService]
 })
-export class AppComponent {
-  title = 'Find out how other fixed it';
+export class AppComponent implements OnInit {
+	constructor() { }
+
+	ngOnInit() { }
+
+	title = 'Tour of reports';
 }
