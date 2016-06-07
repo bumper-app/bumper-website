@@ -1,0 +1,63 @@
+  <h2>My Heroes</h2>
+  <!-- <fix [report]="selectedReport"></fix> -->
+  <ul class="heroes">
+    <li *ngFor="let report of reports" (click)="onSelect(report)">
+
+    	<div class="row">
+
+            <div class="col-md-1 icons">
+
+                <i (click)="onVote(report, 'up')" class="fa fa-sort-asc"></i>
+                <div class="count-ups">{{report.live_saver}}</div>
+                <i (click)="onVote(report, 'down')" class="fa fa-sort-desc"></i>
+
+            </div>
+            <div class="col-md-11">
+
+                <h4 class="dark-blue">{{report.title}}</h4>
+
+                <p>
+                  <a class="source-link" href="{{report.url()}}">{{report.url()}}</a>
+                  <span class="keywords">
+                  <span *ngFor="let keyword of report.keywords()">
+                  	{{keyword}}
+                  </span>
+                  </span>
+                </p>
+
+                <p class="description">
+                {{report.description.slice(0, 180)}}
+                <!-- Toggle + Hide -->
+                <a [hidden]="report.showLongDescription"
+                (click)="report.showLongDescription = !report.showLongDescription">more...</a>
+
+                <!--  Hide -->
+                <span [hidden]="!report.showLongDescription">
+                	{{report.description.slice(180)}}
+
+                	<!--Toggle + Hide -->
+                	<a  (click)="!report.showLongDescription = !report.showLongDescription">less...</a>
+                </span>
+				
+				</p>
+
+                <ul [hidden]="!report.showLongDescription" class="statistiques">
+
+                    <li>Reporter : {{report.reporter_name}} ({{report.reporter_pseudo}})</li>
+                    <li>Assigned : {{report.assigned_to_name}} ({{report.assigned_to_pseudo}})</li>
+                    <li>Report Date : {{report.date}}</li>
+                    <li>Fixing Time : {{report.fixing_time}} days</li>
+                    <li>Severity : {{report.bug_severity}}</li>
+                    <li>Sub-project : {{report.sub_project}}</li>
+                    <li>Files : {{report.number_files}}</li>
+                    <li>Churns : {{report.churns}}</li>
+                    <li>Hunks : {{report.hunks}}</li>
+
+                </ul>
+
+            </div>
+        </div> 
+
+      <span class="badge">{{report.internal_id}}</span> {{report.title}}
+    </li>
+  </ul>

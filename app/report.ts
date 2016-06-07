@@ -2,6 +2,12 @@ import { Fix, Changeset, Hunks } from './fix';
 
 export class Report {
 
+  constructor(raw:any){
+    for (var attr in raw) {
+      this[attr] = raw[attr];
+    }
+  }
+
   id: string; //"bug_netbeans_189621",
   date: string; // "2010-08-18T08:24:00Z",
   title: string; //"Enable collecting thread cpu timestamps by default",
@@ -30,7 +36,7 @@ export class Report {
   churns: number;//147,
   hunks: number;//34,
   number_files: number;//14,
-  file: string[];
+  file: string[] = [];
   //   "lib.profiler.common/src/org/netbeans/lib/profiler/common/integration/IntegrationUtils.java",
   //   "lib.profiler/release/remote-pack-defs/README.txt",
   //   "lib.profiler/release/remote-pack-defs/build.xml",
@@ -49,6 +55,53 @@ export class Report {
   dataset: string;//"Netbeans",
   type: string;//"BUG",
 
-  changeset:Changeset;
-  fixes:Fix[];
+  changeset: Changeset;
+  fixes: Fix[];
+  showLongDescription:boolean = false;
+  live_saver: number = 0;
+
+
+  url():string {
+
+    let splittedId = this.id.split('_')[2];
+    switch (this.id.split('_')[1]) {
+      case 'netbeans':
+        return 'https://netbeans.org/bugzilla/show_bug.cgi?id=' + splittedId;
+      case 'Apache':
+        return 'https://issues.apache.org/jira/browse/' + splittedId;
+      default:
+        return 'https://netbeans.org/bugzilla/show_bug.cgi?id=' + splittedId;
+    }
+  }
+
+  keywords(): string[] {
+
+    let extension: string[] = [];
+
+    for (var i = 0; i < this.file.length; i++) {
+      extension[i] = this.file[i].split('.').pop()
+    }
+
+    return [this.mostCommonTerm(extension), this.project];
+  }
+
+
+  private mostCommonTerm(array:string[]):string {
+    if (array.length === 0)
+      return null;
+    var modeMap = {};
+    var maxEl = array[0], maxCount = 1;
+    for (var i = 0; i < array.length; i++) {
+      var el = array[i];
+      if (modeMap[el] === null)
+        modeMap[el] = 1;
+      else
+        modeMap[el]++;
+      if (modeMap[el] > maxCount) {
+        maxEl = el;
+        maxCount = modeMap[el];
+      }
+    }
+    return maxEl;
+  }
 }

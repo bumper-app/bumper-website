@@ -7,15 +7,7 @@ import { OnInit } from '@angular/core';
 
 @Component({
   selector: 'reports',
-  template: `
-  <h2>My Heroes</h2>
-  <fix [report]="selectedReport"></fix>
-  <ul class="heroes">
-    <li *ngFor="let report of reports" (click)="onSelect(report)">
-      <span class="badge">{{report.internal_id}}</span> {{report.title}}
-    </li>
-  </ul>
-  `,
+  templateUrl: 'app/html/report.html',
   directives: [FixComponent]
 })
 export class ReportComponent implements OnInit {
@@ -44,9 +36,13 @@ export class ReportComponent implements OnInit {
       );
   }
 
+  onVote(report:Report, direction:string){
+    this.reportService.vote(direction, report.id);
+  }
+
   onSelect(report: Report) {
 
-    if (report.fixes === undefined || report.fixes.length === 0 
+    if (report.fixes === undefined || report.fixes.length === 0
       || report.changeset === undefined) {
 
       this.reportService.getFixes(report)
@@ -54,7 +50,7 @@ export class ReportComponent implements OnInit {
           this.selectedReport = report;
         });
     } else {
-        this.selectedReport = report;
+      this.selectedReport = report;
     }
   }
 }

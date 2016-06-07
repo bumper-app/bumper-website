@@ -5,7 +5,6 @@ import 'rxjs/add/operator/toPromise';
 
 import { Report } from './report';
 import { Fix, Changeset, Hunks } from './fix';
-
 /**
  * Simple API consumer for the reports
  */
@@ -29,14 +28,15 @@ export class ReportService {
 	 * @return {Promise<Report[]>}           
 	 */
 	getReports(query: string, advanced: boolean,
-		start: number, end: number, languages: string[], datasets: string[]): Promise<Report[]> {
+		start: number, end: number, languages: string[], datasets: string[])
+		: Promise<Report[]> {
 
 		//Construct the final query string
 		let finalQuery = ((advanced) ? this.advancedReportUrl : this.reportUrl)
 			.replace('1query1', "'" + query + "'")
-			.replace('2query2', "'" + query + "'" + 
-				this.complexFilter(languages, 'file:*.') + 
-				this.complexFilter(datasets, 'dataset%3A'))
+			.replace('2query2', "'" + query + "'" +
+			this.complexFilter(languages, 'file:*.') +
+			this.complexFilter(datasets, 'dataset%3A'))
 			.concat(
 			'&sort', 'live_saver',
 			'&start', start.toString(),
@@ -44,9 +44,16 @@ export class ReportService {
 			'&wt=json'
 			);
 
-		//Construct the promise
+		finalQuery = 'app/mock.json';
+
+		// Construct the promise
 		return this.http.get(finalQuery).toPromise().then(
-			response => response.json().response.docs
+			response => response.json().response.docs.map(
+				function (report) {
+					return new Report(report);
+				}
+			)
+			
 		).catch(this.handleError);
 	}
 
@@ -54,9 +61,10 @@ export class ReportService {
 
 		console.debug("fetching fixes for id:", report.id);
 		return this.http.get(
-				this.fixUrl
-				.replace('BUGID', report.id)
-				.replace("bug_Apache_", "bug_Apache")
+				// this.fixUrl
+				// .replace('BUGID', report.id)
+				// .replace("bug_Apache_", "bug_Apache")
+				'app/response.mock.json'
 			).toPromise().then(
 				response => {
 					report.changeset = response.json().response.docs[0];
@@ -64,6 +72,17 @@ export class ReportService {
 					return report;
 				}
 			).catch(this.handleError);
+	}
+
+	vote(direction:string, id:string){
+
+		let url = 'https://bumper-app.com/life-saver/' + id;
+
+		if (direction === "down") {
+			url = 'https://bumper-app.com/life-unsaver/' + id;
+		}
+
+		this.http.get(url);
 	}
 
 	/**
