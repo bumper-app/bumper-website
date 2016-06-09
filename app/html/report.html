@@ -1,63 +1,107 @@
-  <h2>My Heroes</h2>
-  <!-- <fix [report]="selectedReport"></fix> -->
-  <ul class="heroes">
-    <li *ngFor="let report of reports" (click)="onSelect(report)">
+<h1 [hidden]="!landing" id="search-bar-header" onclick="location.href='https://bumper-app.com';"><span class="logo-bumper">
+      <span class="blue">b</span>
+      <span class="red">u</span>
+      <span class="yellow">m</span>
+      <span class="blue">p</span>
+      <span class="green">e</span>
+      <span class="red">r</span></span> <br>
+      Find Out How <u>Others</u> Fixed It
+</h1>
 
-    	<div class="row">
+<form class="searchbox" action="">
+     <input id="field" 
+     type="search" 
+     placeholder="Type your search" 
+     x-webkit-speech="" 
+     [(ngModel)]="searchQuery" 
+     (keypress)="eventHandler($event.keyCode)">
+     <ul [hidden]="!landing" class="suggestions">
+       <h4>Most Frequent Queries</h4>
+       <li>
+        <a (click)="onSuggestionClick('Null Pointer Exception')">
+       Null Pointer Exception</a>
+       </li>
+       <li>
+        <a (click)="onSuggestionClick('Unresolved enum with bits info')">
+       unresolved enum with bits info</a>
+       </li>
+       <li>
+        <a (click)="onSuggestionClick('java.lang.AssertionError at org.netbeans.modules.cnd.modelimpl.parser dataset:netbeans')">java.lang.AssertionError at org.netbeans.modules.cnd.modelimpl.parser</a>
+       </li>
+       <li>
+        <a (click)="onSuggestionClick('protected RequestProcessor createRequestProcessor(Context ctx)')">protected RequestProcessor createRequestProcessor(Context ctx)</a>
+        </li>
+     </ul>
+     <p [hidden]="landing" *ngIf="queryResponse" class="statistiques-search">
+        About <span id="result-count">{{queryResponse.documentFound}}</span> results (<span id="time">{{queryResponse.ellapsedTime/1000}}</span> seconds)
+     </p>
+ </form>
 
-            <div class="col-md-1 icons">
 
-                <i (click)="onVote(report, 'up')" class="fa fa-sort-asc"></i>
-                <div class="count-ups">{{report.live_saver}}</div>
-                <i (click)="onVote(report, 'down')" class="fa fa-sort-desc"></i>
+<div [hidden]="landing" [style.height.px]="height" id="list_results" class="col-md-6 content">
+<div 
+  *ngFor="let report of reports" 
+  (click)="onSelect(report)"
+  [class.selected]="report === selectedReport"
+  class="row"
+>
 
-            </div>
-            <div class="col-md-11">
+    <div class="col-md-1 icons">
 
-                <h4 class="dark-blue">{{report.title}}</h4>
+        <i (click)="onVote(report, 'up')" class="fa fa-sort-asc"></i>
+        <div class="count-ups">{{report.live_saver}}</div>
+        <i (click)="onVote(report, 'down')" class="fa fa-sort-desc"></i>
 
-                <p>
-                  <a class="source-link" href="{{report.url()}}">{{report.url()}}</a>
-                  <span class="keywords">
-                  <span *ngFor="let keyword of report.keywords()">
-                  	{{keyword}}
-                  </span>
-                  </span>
-                </p>
+    </div>
+    <div class="col-md-11">
 
-                <p class="description">
-                {{report.description.slice(0, 180)}}
-                <!-- Toggle + Hide -->
-                <a [hidden]="report.showLongDescription"
-                (click)="report.showLongDescription = !report.showLongDescription">more...</a>
+        <h4 class="dark-blue">{{report.title}}</h4>
 
-                <!--  Hide -->
-                <span [hidden]="!report.showLongDescription">
-                	{{report.description.slice(180)}}
+        <p>
+          <a class="source-link" href="{{report.url()}}">{{report.url()}}</a>
+          <span class="keywords">
+          <span *ngFor="let keyword of report.keywords()">
+          	{{keyword}}
+          </span>
+          </span>
+        </p>
 
-                	<!--Toggle + Hide -->
-                	<a  (click)="!report.showLongDescription = !report.showLongDescription">less...</a>
-                </span>
-				
-				</p>
+        <p class="description">
+          {{report.description.slice(0, 180)}}
+          <!-- Toggle + Hide -->
+          <a [hidden]="report.showLongDescription"
+          (click)="report.showLongDescription = !report.showLongDescription">more...</a>
 
-                <ul [hidden]="!report.showLongDescription" class="statistiques">
+          <!--  Hide -->
+          <span [hidden]="!report.showLongDescription">
+          	{{report.description.slice(180)}}
 
-                    <li>Reporter : {{report.reporter_name}} ({{report.reporter_pseudo}})</li>
-                    <li>Assigned : {{report.assigned_to_name}} ({{report.assigned_to_pseudo}})</li>
-                    <li>Report Date : {{report.date}}</li>
-                    <li>Fixing Time : {{report.fixing_time}} days</li>
-                    <li>Severity : {{report.bug_severity}}</li>
-                    <li>Sub-project : {{report.sub_project}}</li>
-                    <li>Files : {{report.number_files}}</li>
-                    <li>Churns : {{report.churns}}</li>
-                    <li>Hunks : {{report.hunks}}</li>
+          	<!--Toggle + Hide -->
+          	<a  (click)="!report.showLongDescription = !report.showLongDescription">less...</a>
+          </span>
+        </p>
 
-                </ul>
+        <ul [hidden]="!report.showLongDescription" class="statistiques">
 
-            </div>
-        </div> 
+            <li>Reporter : {{report.reporter_name}} ({{report.reporter_pseudo}})</li>
+            <li>Assigned : {{report.assigned_to_name}} ({{report.assigned_to_pseudo}})</li>
+            <li>Report Date : {{report.date}}</li>
+            <li>Fixing Time : {{report.fixing_time}} days</li>
+            <li>Severity : {{report.bug_severity}}</li>
+            <li>Sub-project : {{report.sub_project}}</li>
+            <li>Files : {{report.number_files}}</li>
+            <li>Churns : {{report.churns}}</li>
+            <li>Hunks : {{report.hunks}}</li>
 
-      <span class="badge">{{report.internal_id}}</span> {{report.title}}
-    </li>
-  </ul>
+        </ul>
+
+    </div>
+</div> 
+</div>
+<fix 
+  [hidden]="landing"
+  [style.height.px]="height" 
+  [report]="selectedReport" 
+  class="col-md-6 content" 
+  id="fix">
+</fix>

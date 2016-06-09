@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { ReportService } from './report.service';
 import { ReportComponent } from './report.component';
+import { FooterComponent } from './footer.component';
 
 @Component({
 	moduleId: module.id,
 	selector: 'my-app',
 	 template: `
-      <h1>{{title}}</h1>
-      <reports></reports>
+	  <div class="container">
+      <reports (searchComplete) = "handleSearchEvent($event)"></reports>
+      </div>
+      <footer-bumper></footer-bumper>
     `,
-	directives: [ReportComponent],
+	directives: [ReportComponent, FooterComponent],
 	providers: [ReportService]
 })
 export class AppComponent implements OnInit {

@@ -36,6 +36,7 @@ node_modules
 ###################
 app/**/*.map
 app/**/*.js
+app/**/*.css
 
 # Ignore Test reporters
 ###################

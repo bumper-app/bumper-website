@@ -5,6 +5,7 @@ import 'rxjs/add/operator/toPromise';
 
 import { Report } from './report';
 import { Fix, Changeset, Hunks } from './fix';
+import { QueryResponse } from './queryresponse';
 /**
  * Simple API consumer for the reports
  */
@@ -29,7 +30,7 @@ export class ReportService {
 	 */
 	getReports(query: string, advanced: boolean,
 		start: number, end: number, languages: string[], datasets: string[])
-		: Promise<Report[]> {
+		: Promise<QueryResponse> {
 
 		//Construct the final query string
 		let finalQuery = ((advanced) ? this.advancedReportUrl : this.reportUrl)
@@ -48,12 +49,16 @@ export class ReportService {
 
 		// Construct the promise
 		return this.http.get(finalQuery).toPromise().then(
-			response => response.json().response.docs.map(
-				function (report) {
-					return new Report(report);
-				}
-			)
-			
+			response => 
+				new QueryResponse(
+					response.json().response.QTime,
+					response.json().response.numFound,
+					response.json().response.docs.map(
+						function(report) {
+							return new Report(report);
+						}
+					)
+				)
 		).catch(this.handleError);
 	}
 
@@ -67,8 +72,12 @@ export class ReportService {
 				'app/response.mock.json'
 			).toPromise().then(
 				response => {
-					report.changeset = response.json().response.docs[0];
-					report.fixes = response.json().response.docs.slice(1, parseInt(response.json().response.numFound));
+					report.changeset = new Changeset(response.json().response.docs[0]);
+					report.fixes = response.json().response.docs
+						.slice(1, parseInt(response.json().response.numFound))
+						.map(function(hunk){
+							return new Hunks(hunk);
+						});
 					return report;
 				}
 			).catch(this.handleError);

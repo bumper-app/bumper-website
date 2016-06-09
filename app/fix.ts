@@ -1,5 +1,12 @@
 
 export class Fix{
+
+	constructor(raw:any){
+		for (var attr in raw) {
+			this[attr] = raw[attr];
+		}
+	}
+
 	id:string;
 	type:string;
 	parent_bug: string;

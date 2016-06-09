@@ -1,0 +1,145 @@
+.searchbox {
+  /*definint width of form element*/
+
+  width: 100%;
+  margin: auto;
+  padding-top: 50px;
+
+  /*centering the form element*/
+}
+
+.result .searchbox{
+  padding-top: 20px;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+::-webkit-input-placeholder { font-family:'Roboto'; font-weight: 100; color:#DADFE1; }
+::-moz-placeholder { font-family:'Roboto'; font-weight: 100; color:#DADFE1; } /* firefox 19+ */
+:-ms-input-placeholder { font-family:'Roboto'; font-weight: 100; color:#DADFE1; } /* ie */
+input:-moz-placeholder { font-family:'Roboto'; font-weight: 100; color:#DADFE1; }
+
+input[type="search"] {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  font-size: 36px;
+  width: 100%;
+  color: #91938F;
+  background:transparent;
+  /*removing boder from search box*/
+
+  border: none;
+  /*defining background image as a search symbol*/
+
+  border-bottom: 1px solid #4873A9;
+
+}
+
+input[type="search"]:focus {
+    border:1px solid #4873A9;
+}
+
+/*now using placeholder property to change color of placholder text and making it consitent accross the browser by use of prefix*/
+
+input[type="search"]::-webkit-input-placeholder {
+  color: #C7BDB7;
+}
+
+input[type="search"]:-moz-placeholder {
+  /* Firefox 18- */
+
+  color: #C7BDB7;
+}
+
+input[type="search"]::-moz-placeholder {
+  /* Firefox 19+ */
+
+  color: #C7BDB7;
+}
+
+input[type="search"]:-ms-input-placeholder {
+  /* interner explorer*/
+
+  color: #C7BDB7;
+}
+
+.searchbox a {
+  display: block;
+  /*removing underlines from anchor element*/
+
+  text-decoration: none;
+  color: white;
+  font-size: 30px;
+  background-color: #4873A9;
+  padding: 10px;
+}
+
+.searchbox ul {
+  /*removing predefined bullet points from list*/
+
+  list-style: none;
+  /*removing padding from list items*/
+
+  padding: 0;
+  width: 100%;
+}
+
+.searchbox ul li {
+  margin-bottom: 10px;
+}
+/*adding effect when the mouse is hovered over list item*/
+
+.searchbox ul li a:hover {
+  color: white;
+  background: #799DCD;
+}
+/*moving it slightly toware right when hovered*/
+
+.searchbox ul li:hover {
+  /*transform*/
+
+  -webkit-transform: translateX(20px);
+  -moz-transform: translateX(20px);
+  -ms-transform: translateX(20px);
+  -o-transform: translateX(20px);
+  transform: translateX(20px);
+}
+/*now first we will hide the suggestion list*/
+
+.suggestions li, .suggestions h4 {
+  overflow: hidden;
+  height: 0;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+/*and make the suggestion reappear when user focus on search field*/
+
+input[type="search"]:focus + .suggestions li{
+  height: 63px;
+}
+
+
+input[type="search"]:focus + .suggestions h4{
+  margin-top: 40px;
+  height: 20px;
+}
+
+
+.result .suggestions {
+  display: none;
+}
+
+.byline {
+  text-align: center;
+  font-size: 18px;
+}
+
+.byline a {
+  text-decoration: none;
+  color: #1f5350;
+}

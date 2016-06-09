@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var report_service_1 = require('./report.service');
 var report_component_1 = require('./report.component');
+var footer_component_1 = require('./footer.component');
 var AppComponent = (function () {
     function AppComponent() {
         this.title = 'Tour of reports';
@@ -20,8 +21,8 @@ var AppComponent = (function () {
         core_1.Component({
             moduleId: module.id,
             selector: 'my-app',
-            template: "\n      <h1>{{title}}</h1>\n      <reports></reports>\n    ",
-            directives: [report_component_1.ReportComponent],
+            template: "\n\t  <div class=\"container\">\n      <reports (searchComplete) = \"handleSearchEvent($event)\"></reports>\n      </div>\n      <footer-bumper></footer-bumper>\n    ",
+            directives: [report_component_1.ReportComponent, footer_component_1.FooterComponent],
             providers: [report_service_1.ReportService]
         }), 
         __metadata('design:paramtypes', [])

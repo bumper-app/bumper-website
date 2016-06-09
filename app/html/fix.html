@@ -1,0 +1,27 @@
+<div class="row" *ngIf="report">
+    <div class="col-md-12">
+        <div class="changeset">
+            <div class="changeset_summary">
+                <i>{{report.changeset.id}}</i>{{report.changeset.summary}}
+             </div>
+            <ul class="changeset_file">
+                <li *ngFor='let file of report.file'>{{file}}</li>
+            </ul>
+            <div class="changeset_stats">
+                ({{report.number_files}}) files, 
+                ({{report.positive_churns}}) insertions, 
+                ({{report.negative_churns}}) deletions
+            </div>
+        </div>
+    </div>
+    <div *ngFor="let fix of report.fixes" class="row">
+         <div class="col-md-12">
+            <pre codeHighlight><code class='html'>Index: {{fix.id.split("@@")[2]}}
+            
+            {{fix.insertion}}
+            {{fix.change.join('\n')}}
+            </code></pre>
+         </div>
+    </div>
+</div>
+
