@@ -54,7 +54,7 @@ export class ReportService {
 					response.json().response.QTime,
 					response.json().response.numFound,
 					response.json().response.docs.map(
-						function(report) {
+						function(report:any) {
 							return new Report(report);
 						}
 					)
@@ -75,7 +75,7 @@ export class ReportService {
 					report.changeset = new Changeset(response.json().response.docs[0]);
 					report.fixes = response.json().response.docs
 						.slice(1, parseInt(response.json().response.numFound))
-						.map(function(hunk){
+						.map(function(hunk:any){
 							return new Hunks(hunk);
 						});
 					return report;

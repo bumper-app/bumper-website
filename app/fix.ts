@@ -3,7 +3,7 @@ export class Fix{
 
 	constructor(raw:any){
 		for (var attr in raw) {
-			this[attr] = raw[attr];
+			(this as any)[attr] = raw[attr];
 		}
 	}
 

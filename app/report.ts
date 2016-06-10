@@ -3,8 +3,9 @@ import { Fix, Changeset, Hunks } from './fix';
 export class Report {
 
   constructor(raw:any){
+
     for (var attr in raw) {
-      this[attr] = raw[attr];
+      (this as any)[attr] = raw[attr];
     }
   }
 
@@ -89,7 +90,7 @@ export class Report {
   private mostCommonTerm(array:string[]):string {
     if (array.length === 0)
       return null;
-    var modeMap = {};
+    var modeMap:any = {};
     var maxEl = array[0], maxCount = 1;
     for (var i = 0; i < array.length; i++) {
       var el = array[i];
