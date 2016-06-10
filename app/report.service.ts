@@ -45,7 +45,7 @@ export class ReportService {
 			'&wt=json'
 			);
 
-		finalQuery = 'app/mock.json';
+		// finalQuery = 'app/mock.json';
 
 		// Construct the promise
 		return this.http.get(finalQuery).toPromise().then(
@@ -66,10 +66,10 @@ export class ReportService {
 
 		console.debug("fetching fixes for id:", report.id);
 		return this.http.get(
-				// this.fixUrl
-				// .replace('BUGID', report.id)
-				// .replace("bug_Apache_", "bug_Apache")
-				'app/response.mock.json'
+				this.fixUrl
+				.replace('BUGID', report.id)
+				.replace("bug_Apache_", "bug_Apache")
+				// 'app/response.mock.json'
 			).toPromise().then(
 				response => {
 					report.changeset = new Changeset(response.json().response.docs[0]);
